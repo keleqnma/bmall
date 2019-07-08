@@ -100,4 +100,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./addCommodity.js');
+seajs.use('./addUser.js');

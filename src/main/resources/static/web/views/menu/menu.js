@@ -84,4 +84,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./categoryList.js');
+seajs.use('./menu.js');

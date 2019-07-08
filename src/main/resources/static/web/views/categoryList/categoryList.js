@@ -17,8 +17,8 @@ define(function (require, exports, module) {
 
         initialize: function () {
             this.model = new Backbone.Model();
+            this.model.set("resourceData", resourceData);
             this.getTree();
-            this.model.set("categoryData", categoryData);
             this.hideView();
 
         },
@@ -39,7 +39,7 @@ define(function (require, exports, module) {
         },
 
         handlerAdd: function () {
-            window.location.href = "../addmenu/addmenu.html";
+            window.location.href = "../addCategory/addCategory.html";
         },
 
         handlerDelete: function (event) {
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                 utils.showTip("删除成功");
                 $(window).trigger("changeMenu");
                 setTimeout(function () {
-                    window.location.href = "../menu/menu.html";
+                    window.location.href = "../category/category.html";
                 }, 1000);
             })
         },
@@ -73,7 +73,7 @@ define(function (require, exports, module) {
         handlerEdit: function (event) {
             var target = $(event.currentTarget);
             var id = target.data("id");
-            window.location.href = "../addmenu/addmenu.html?id=" + id;
+            window.location.href = "../addCategory/addCategory.html?id=" + id;
 
         }
 

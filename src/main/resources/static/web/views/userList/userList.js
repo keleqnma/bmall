@@ -229,4 +229,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./commodityList.js');
+seajs.use('./userList.js');
