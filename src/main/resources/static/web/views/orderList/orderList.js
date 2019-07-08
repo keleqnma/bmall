@@ -39,15 +39,17 @@ define(function (require, exports, module) {
                     url: baseUrl + "/order/tables"
                 },
                 "columns": [
-                    {"data": "ordername"},
-                    {"data": "name"},
-                    {"data": "createTime"},
+                    {"data": "id"},
+                    {"data": "userId"},
+                    {"data": "issueTime"},
+                    {"data": "price"},
+                    {"data": "state"},
                     {
                         render: function (data, type, row, meta) {
                             var str = "";
 
                             if ($.inArray("/order-put", resourceData) > -1) {
-                                str += "<button  data-text='编辑用户'  data-id='addOrder' data-link='../addOrder/addOrder.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'><i class='fa fa-pencil' aria-hidden='true'></i> 编辑</button>"
+                                str += "<button  data-text='编辑订单'  data-id='addOrder' data-link='../addOrder/addOrder.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'><i class='fa fa-pencil' aria-hidden='true'></i> 编辑</button>"
                             }
 
                             if ($.inArray("/order/editOrder-post", resourceData) > -1) {

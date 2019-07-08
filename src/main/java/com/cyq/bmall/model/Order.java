@@ -17,6 +17,7 @@ public class Order {
     private Long userId;
     private Date issueTime;
     private String address;
+    private double price;
     private String state;
 
     @TableField(exist = false)

@@ -32,7 +32,7 @@ define(function (require, exports, module) {
         handlerEdit: function (postData) {
             postData["id"] = id;
             var _this = this;
-            utils.getPUT("/user/editPwd", postData, function (res) {
+            utils.getPUT("/order/editPwd", postData, function (res) {
                 utils.showTip("修改成功");
 
                 setTimeout(function () {
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         initData: function () {
             var _this = this;
             if (id) {
-                utils.getJSON("/user/" + id, {}, function (res) {
+                utils.getJSON("/order/" + id, {}, function (res) {
                     _this.dealData(res);
                 })
             }
@@ -53,7 +53,7 @@ define(function (require, exports, module) {
 
         dealData: function (res) {
             $(".name").val(res.name);
-            $(".user-name").val(res.username);
+            $(".order-name").val(res.ordername);
 
         },
 
@@ -68,4 +68,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./editPassword.js');
+seajs.use('./editOrder.js');

@@ -68,4 +68,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./editPassword.js');
+seajs.use('./editOrder.js');
