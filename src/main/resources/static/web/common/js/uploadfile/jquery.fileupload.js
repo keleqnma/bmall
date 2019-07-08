@@ -38,7 +38,7 @@
             '|(Kindle/(1\\.0|2\\.[05]|3\\.0))'
     ).test(window.navigator.userAgent) ||
         // Feature detection for all other devices:
-        $('<input type="file">').prop('disabled'));
+        $('<input state="file">').prop('disabled'));
 
     // The FileReader API is not actually used, but works as feature detection,
     // as e.g. Safari supports XHR file uploads via the FormData API,
@@ -83,7 +83,7 @@
             // can be a string or an array of strings:
             paramName: undefined,
             // By default, each file of a selection is uploaded using an individual
-            // request for XHR type uploads. Set to false to upload file
+            // request for XHR state uploads. Set to false to upload file
             // selections in one request each:
             singleFileUploads: true,
             // To limit the number of files uploaded with one XHR request,
@@ -1194,8 +1194,8 @@
         _initSpecialOptions: function () {
             var options = this.options;
             if (options.fileInput === undefined) {
-                options.fileInput = this.element.is('input[type="file"]') ?
-                        this.element : this.element.find('input[type="file"]');
+                options.fileInput = this.element.is('input[state="file"]') ?
+                        this.element : this.element.find('input[state="file"]');
             } else if (!(options.fileInput instanceof $)) {
                 options.fileInput = $(options.fileInput);
             }

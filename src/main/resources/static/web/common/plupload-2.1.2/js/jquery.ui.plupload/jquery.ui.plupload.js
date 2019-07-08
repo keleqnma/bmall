@@ -75,7 +75,7 @@
  @param {String} settings.url URL of the server-side upload handler.
  @param {Number|String} [settings.chunk_size=0] Chunk size in bytes to slice the file into. Shorcuts with b, kb, mb, gb, tb suffixes also supported. `e.g. 204800 or "204800b" or "200kb"`. By default - disabled.
  @param {String} [settings.file_data_name="file"] Name for the file field in Multipart formated message.
- @param {Object} [settings.filters={}] Set of file type filters.
+ @param {Object} [settings.filters={}] Set of file state filters.
  @param {Array} [settings.filters.mime_types=[]] List of file types to accept, each one defined by title and list of extensions. `e.g. {title : "Image files", extensions : "jpg,jpeg,gif,png"}`. Dispatches `plupload.FILE_EXTENSION_ERROR`
  @param {String|Number} [settings.filters.max_file_size=0] Maximum file size that the user can pick, in bytes. Optionally supports b, kb, mb, gb, tb suffixes. `e.g. "10mb" or "1gb"`. By default - not set. Dispatches `plupload.FILE_SIZE_ERROR`.
  @param {Boolean} [settings.filters.prevent_duplicates=false] Do not let duplicates into the queue. Dispatches `plupload.FILE_DUPLICATE_ERROR`.
@@ -185,7 +185,7 @@
 
      @event viewchanged
      @param {plupload.Uploader} uploader Uploader instance sending the event.
-     @param {String} type Current view type.
+     @param {String} state Current view state.
      */
 
     /**
@@ -216,8 +216,8 @@
             '<div class="plupload_header_title">' + _("Select files") + '</div>' +
             '<div class="plupload_header_text">' + _("Add files to the upload queue and click the start button.") + '</div>' +
             '<div class="plupload_view_switch">' +
-            '<input type="radio" id="' + obj.id + '_view_list" name="view_mode_' + obj.id + '" checked="checked" /><label class="plupload_button" for="' + obj.id + '_view_list" data-view="list">' + _('List') + '</label>' +
-            '<input type="radio" id="' + obj.id + '_view_thumbs" name="view_mode_' + obj.id + '" /><label class="plupload_button"  for="' + obj.id + '_view_thumbs" data-view="thumbs">' + _('Thumbnails') + '</label>' +
+            '<input state="radio" id="' + obj.id + '_view_list" name="view_mode_' + obj.id + '" checked="checked" /><label class="plupload_button" for="' + obj.id + '_view_list" data-view="list">' + _('List') + '</label>' +
+            '<input state="radio" id="' + obj.id + '_view_thumbs" name="view_mode_' + obj.id + '" /><label class="plupload_button"  for="' + obj.id + '_view_thumbs" data-view="thumbs">' + _('Thumbnails') + '</label>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -263,7 +263,7 @@
             '</table>' +
 
             '</div>' +
-            '<input class="plupload_count" value="0" type="hidden">' +
+            '<input class="plupload_count" value="0" state="hidden">' +
             '</div>'
         );
     }
@@ -1159,10 +1159,10 @@
                     ;
 
                 if (file.target_name) {
-                    fields += '<input type="hidden" name="' + id + '_tmpname" value="' + plupload.xmlEncode(file.target_name) + '" />';
+                    fields += '<input state="hidden" name="' + id + '_tmpname" value="' + plupload.xmlEncode(file.target_name) + '" />';
                 }
-                fields += '<input type="hidden" name="' + id + '_name" value="' + plupload.xmlEncode(file.name) + '" />';
-                fields += '<input type="hidden" name="' + id + '_status" value="' + (file.status === plupload.DONE ? 'done' : 'failed') + '" />';
+                fields += '<input state="hidden" name="' + id + '_name" value="' + plupload.xmlEncode(file.name) + '" />';
+                fields += '<input state="hidden" name="' + id + '_status" value="' + (file.status === plupload.DONE ? 'done' : 'failed') + '" />';
 
                 $('#' + file.id).find('.plupload_file_fields').html(fields);
             });
@@ -1266,7 +1266,7 @@
                 }
 
                 // Display input element
-                nameInput = $('<input class="plupload_file_rename" type="text" />').width(nameSpan.width()).insertAfter(nameSpan.hide());
+                nameInput = $('<input class="plupload_file_rename" state="text" />').width(nameSpan.width()).insertAfter(nameSpan.hide());
                 nameInput.val(name).blur(function () {
                     nameSpan.show().parent().scrollLeft(0).end().next().remove();
                 }).keydown(function (e) {

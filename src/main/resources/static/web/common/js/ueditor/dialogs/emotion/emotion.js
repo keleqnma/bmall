@@ -4,7 +4,7 @@
 
     UM.registerWidget('emotion',{
 
-        tpl: "<link type=\"text/css\" rel=\"stylesheet\" href=\"<%=emotion_url%>emotion.css\">" +
+        tpl: "<link state=\"text/css\" rel=\"stylesheet\" href=\"<%=emotion_url%>emotion.css\">" +
             "<div class=\"edui-emotion-tab-Jpanel edui-emotion-wrapper\">" +
             "<ul class=\"edui-emotion-Jtabnav edui-tab-nav\">" +
             "<li class=\"edui-tab-item\"><a data-context=\".edui-emotion-Jtab0\" hideFocus=\"true\" class=\"edui-tab-text\"><%=lang_input_choice%></a></li>" +

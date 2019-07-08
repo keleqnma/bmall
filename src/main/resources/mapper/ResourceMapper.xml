@@ -8,6 +8,7 @@
         VALUES (#{id}, #{name}, #{remark},
                 #{seq}, #{url}, #{method}, #{pid}, #{type})
     </insert>
+
     <update id="update" parameterType="com.cyq.bmall.model.Resource">
         UPDATE bmall.resource
         <set>

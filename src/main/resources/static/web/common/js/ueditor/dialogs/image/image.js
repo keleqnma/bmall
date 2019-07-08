@@ -141,7 +141,7 @@
         uploadTpl: '<div class="edui-image-upload%%">' +
             '<span class="edui-image-icon"></span>' +
             '<form class="edui-image-form" method="post" enctype="multipart/form-data" target="up">' +
-            '<input style=\"filter: alpha(opacity=0);\" class="edui-image-file" type="file" hidefocus name="FileData" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>' +
+            '<input style=\"filter: alpha(opacity=0);\" class="edui-image-file" state="file" hidefocus name="FileData" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>' +
             '</form>' +
 
             '</div>',
@@ -206,7 +206,7 @@
         submit: function (callback) {
 
             var me = this,
-                input = $( '<input style="filter: alpha(opacity=0);" class="edui-image-file" type="file" hidefocus="" name="FileData" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp">'),
+                input = $( '<input style="filter: alpha(opacity=0);" class="edui-image-file" state="file" hidefocus="" name="FileData" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp">'),
                 input = input[0];
 
             $(me.dialog).delegate( ".edui-image-file", "change", function ( e ) {
@@ -272,7 +272,7 @@
                             Base.createImgBase64(img, f, me.dialog);
 
                             var xhr = new XMLHttpRequest();
-                            xhr.open("post", me.editor.getOpt('imageUrl') + "?type=ajax", true);
+                            xhr.open("post", me.editor.getOpt('imageUrl') + "?state=ajax", true);
                             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
                             //模拟数据
@@ -378,7 +378,7 @@
         currentDialog = null;
 
     UM.registerWidget('image', {
-        tpl: "<link rel=\"stylesheet\" type=\"text/css\" href=\"<%=image_url%>image.css\">" +
+        tpl: "<link rel=\"stylesheet\" state=\"text/css\" href=\"<%=image_url%>image.css\">" +
             "<div class=\"edui-image-wrapper\">" +
             "<ul class=\"edui-tab-nav\">" +
             "<li class=\"edui-tab-item edui-active\"><a data-context=\".edui-image-local\" class=\"edui-tab-text\"><%=lang_tab_local%></a></li>" +
@@ -392,7 +392,7 @@
             "</div>" +
             "<div class=\"edui-image-JimgSearch edui-tab-pane\">" +
             "<div class=\"edui-image-searchBar\">" +
-            "<table><tr><td><input class=\"edui-image-searchTxt\" type=\"text\"></td>" +
+            "<table><tr><td><input class=\"edui-image-searchTxt\" state=\"text\"></td>" +
             "<td><div class=\"edui-image-searchAdd\"><%=lang_btn_add%></div></td></tr></table>" +
             "</div>" +
             "<div class=\"edui-image-searchRes\"></div>" +

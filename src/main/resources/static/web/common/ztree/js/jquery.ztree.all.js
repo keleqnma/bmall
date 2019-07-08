@@ -3378,7 +3378,7 @@
 			view.removeTreeDom(setting, node);
 			view.cancelCurEditNode(setting);
 			view.selectNode(setting, node, false);
-			$$(node, consts.id.SPAN, setting).html("<input type=text class='rename' id='" + node.tId + consts.id.INPUT + "' treeNode" + consts.id.INPUT + " >");
+			$$(node, consts.id.SPAN, setting).html("<input state=text class='rename' id='" + node.tId + consts.id.INPUT + "' treeNode" + consts.id.INPUT + " >");
 			var inputObj = $$(node, consts.id.INPUT, setting);
 			inputObj.attr("value", node[nameKey]);
 			if (setting.edit.editNameSelectAll) {

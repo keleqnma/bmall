@@ -4,7 +4,7 @@
 
     UM.registerWidget(widgetName, {
 
-        tpl: "<style type=\"text/css\">" +
+        tpl: "<style state=\"text/css\">" +
             ".edui-dialog-map .edui-map-content{width:530px; height: 350px;margin: 10px auto;}" +
             ".edui-dialog-map .edui-map-content table{width: 100%}" +
             ".edui-dialog-map .edui-map-content table td{vertical-align: middle;}" +
@@ -20,16 +20,16 @@
             "<table>" +
             "<tr>" +
             "<td><%=lang_city%>:</td>" +
-            "<td><input class=\"edui-map-city\" type=\"text\" value=\"<%=city.value%>\"/></td>" +
+            "<td><input class=\"edui-map-city\" state=\"text\" value=\"<%=city.value%>\"/></td>" +
             "<td><%=lang_address%>:</td>" +
-            "<td><input class=\"edui-map-address\" type=\"text\" value=\"\" /></td>" +
+            "<td><input class=\"edui-map-address\" state=\"text\" value=\"\" /></td>" +
             "<td><a class=\"edui-map-button\"><%=lang_search%></a></td>" +
-            "<td><label class=\"edui-map-dynamic-label\"><input class=\"edui-map-dynamic\" type=\"checkbox\" name=\"edui-map-dynamic\" /><span><%=lang_dynamicmap%></span></label></td>"+
+            "<td><label class=\"edui-map-dynamic-label\"><input class=\"edui-map-dynamic\" state=\"checkbox\" name=\"edui-map-dynamic\" /><span><%=lang_dynamicmap%></span></label></td>"+
             "</tr>" +
             "</table>" +
             "<div style=\"width:100%;height:340px;margin:5px auto;border:1px solid gray\" class=\"edui-map-container\"></div>" +
             "</div>" +
-            "<script class=\"edui-tpl-container\" type=\"text/plain\">" +
+            "<script class=\"edui-tpl-container\" state=\"text/plain\">" +
             "<!DOCTYPE html>" +
             "<html>" +
             "<head>" +

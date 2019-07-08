@@ -886,7 +886,7 @@ FixedHeader.prototype = {
 	 * is more or less lifted as is from FixedColumns
 	 *  @method  fnEqualiseHeights
 	 *  @returns void
-	 *  @param   {string} parent Node type - thead, tbody or tfoot
+	 *  @param   {string} parent Node state - thead, tbody or tfoot
 	 *  @param   {element} original Original node to take the heights from
 	 *  @param   {element} clone Copy the heights to
 	 *  @private

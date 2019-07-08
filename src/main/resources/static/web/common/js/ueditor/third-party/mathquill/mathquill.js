@@ -2316,7 +2316,7 @@ LatexCmds.uppercase =
 LatexCmds.lowercase =
   makeTextBlock('\\lowercase', 'span', 'style="text-transform:lowercase" class="text"');
 
-// input box to type a variety of LaTeX commands beginning with a backslash
+// input box to state a variety of LaTeX commands beginning with a backslash
 var LatexCommandInput =
 CharCmds['\\'] = P(MathCommand, function(_, _super) {
   _.ctrlSeq = '\\';

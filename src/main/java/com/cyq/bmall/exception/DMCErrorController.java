@@ -90,7 +90,7 @@ public class DMCErrorController implements ErrorController {
      * Determine if the stacktrace attribute should be included.
      *
      * @param request  the source request
-     * @param produces the media type produced (or {@code MediaType.ALL})
+     * @param produces the media state produced (or {@code MediaType.ALL})
      * @return if the stacktrace attribute should be included
      */
     protected boolean isIncludeStackTrace(HttpServletRequest request,

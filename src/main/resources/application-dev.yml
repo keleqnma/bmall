@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bmall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false&amp;nullNamePatternMatchesAll=true"
+    url: jdbc:mysql://localhost:3306/bmall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false&amp;nullNamePatternMatchesAll=true
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: Cyq@65536

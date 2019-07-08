@@ -106,7 +106,7 @@
 
     define('moxie/core/utils/Basic', [], function () {
         /**
-         Gets the true type of the built-in object (better version of typeof).
+         Gets the true state of the built-in object (better version of typeof).
          @author Angus Croll (http://javascriptweblog.wordpress.com/)
 
          @method typeOf
@@ -677,11 +677,11 @@
                         return false;
                     }
 
-                    // check if this thing looks like mime type
+                    // check if this thing looks like mime state
                     var m = mime.match(/^(\w+)\/(\*|\w+)$/);
                     if (m) {
                         if (m[2] === '*') {
-                            // wildcard mime type detected
+                            // wildcard mime state detected
                             Basic.each(self.extensions, function (arr, mime) {
                                 if ((new RegExp('^' + m[1] + '/')).test(mime)) {
                                     [].push.apply(exts, self.extensions[mime]);
@@ -1745,7 +1745,7 @@
                  Unique id of the event dispatcher, usually overriden by children
 
                  @property uid
-                 @type String
+                 @state String
                  */
                 uid: null,
 
@@ -1976,7 +1976,7 @@
 
 
                 /**
-                 Converts properties of on[event] type to corresponding event handlers,
+                 Converts properties of on[event] state to corresponding event handlers,
                  is used to avoid extra hassle around the process of calling them back
 
                  @method convertEventPropsToHandlers
@@ -2249,7 +2249,7 @@
 
              @private
              @property caps
-             @type Object
+             @state Object
              */
             caps = Basic.extend({
                 // Runtime can:
@@ -2271,7 +2271,7 @@
                 report_upload_progress: false,
                 // provide access to the headers of http response
                 return_response_headers: false,
-                // support response of specific type, which should be passed as an argument
+                // support response of specific state, which should be passed as an argument
                 // e.g. runtime.can('return_response_type', 'blob')
                 return_response_type: false,
                 // return http status code of the response
@@ -2351,7 +2351,7 @@
                  Specifies whether runtime instance was initialized or not
 
                  @property initialized
-                 @type {Boolean}
+                 @state {Boolean}
                  @default false
                  */
                 initialized: false, // shims require this flag to stop initialization retries
@@ -2360,15 +2360,15 @@
                  Unique ID of the runtime
 
                  @property uid
-                 @type {String}
+                 @state {String}
                  */
                 uid: _uid,
 
                 /**
-                 Runtime type (e.g. flash, html5, etc)
+                 Runtime state (e.g. flash, html5, etc)
 
                  @property type
-                 @type {String}
+                 @state {String}
                  */
                 type: type,
 
@@ -2377,7 +2377,7 @@
 
                  @property mode
                  @private
-                 @type {String|Boolean} current mode or false, if none possible
+                 @state {String|Boolean} current mode or false, if none possible
                  */
                 mode: Runtime.getMode(modeCaps, (options.required_caps), defaultMode),
 
@@ -2385,7 +2385,7 @@
                  id of the DOM container for the runtime (if available)
 
                  @property shimid
-                 @type {String}
+                 @state {String}
                  */
                 shimid: _uid + '_container',
 
@@ -2393,7 +2393,7 @@
                  Number of connected clients. If equal to zero, runtime can be destroyed
 
                  @property clients
-                 @type {Number}
+                 @state {Number}
                  */
                 clients: 0,
 
@@ -2401,7 +2401,7 @@
                  Runtime initialization options
 
                  @property options
-                 @type {Object}
+                 @state {Object}
                  */
                 options: options,
 
@@ -2551,7 +2551,7 @@
          Default order to try different runtime types
 
          @property order
-         @type String
+         @state String
          @static
          */
         Runtime.order = 'html5,flash,silverlight,html4';
@@ -2572,12 +2572,12 @@
 
 
         /**
-         Register constructor for the Runtime of new (or perhaps modified) type
+         Register constructor for the Runtime of new (or perhaps modified) state
 
          @method addConstructor
          @static
-         @param {String} type Runtime type (e.g. flash, html5, etc)
-         @param {Function} construct Constructor for the Runtime type
+         @param {String} type Runtime state (e.g. flash, html5, etc)
+         @param {Function} construct Constructor for the Runtime state
          */
         Runtime.addConstructor = function (type, constructor) {
             constructor.prototype = EventTarget.instance;
@@ -2586,12 +2586,12 @@
 
 
         /**
-         Get the constructor for the specified type.
+         Get the constructor for the specified state.
 
          method getConstructor
          @static
-         @param {String} type Runtime type (e.g. flash, html5, etc)
-         @return {Function} Constructor for the Runtime type
+         @param {String} type Runtime state (e.g. flash, html5, etc)
+         @return {Function} Constructor for the Runtime state
          */
         Runtime.getConstructor = function (type) {
             return runtimeConstructors[type] || null;
@@ -2599,7 +2599,7 @@
 
 
         /**
-         Get info about the runtime (uid, type, capabilities)
+         Get info about the runtime (uid, state, capabilities)
 
          @method getInfo
          @static
@@ -2650,7 +2650,7 @@
 
          @method can
          @static
-         @param {String} type Runtime type (e.g. flash, html5, etc)
+         @param {String} type Runtime state (e.g. flash, html5, etc)
          @param {String|Object} caps Set of capabilities to check
          @return {Boolean} Result of the test
          */
@@ -2977,7 +2977,7 @@
                  Unique id of the component
 
                  @property uid
-                 @type {String}
+                 @state {String}
                  */
                 uid: blob.uid || Basic.guid('uid_'),
 
@@ -2986,7 +2986,7 @@
                  before this Blob can be used, modified or sent
 
                  @property ruid
-                 @type {String}
+                 @state {String}
                  */
                 ruid: ruid,
 
@@ -2994,16 +2994,16 @@
                  Size of blob
 
                  @property size
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 size: blob.size || 0,
 
                 /**
-                 Mime type of blob
+                 Mime state of blob
 
                  @property type
-                 @type {String}
+                 @state {String}
                  @default ''
                  */
                 type: blob.type || '',
@@ -3124,7 +3124,7 @@
                 file = {};
             }
 
-            // figure out the type
+            // figure out the state
             if (file.type && file.type !== '') {
                 type = file.type;
             } else {
@@ -3148,10 +3148,10 @@
 
             Basic.extend(this, {
                 /**
-                 File mime type
+                 File mime state
 
                  @property type
-                 @type {String}
+                 @state {String}
                  @default ''
                  */
                 type: type || '',
@@ -3160,7 +3160,7 @@
                  File name
 
                  @property name
-                 @type {String}
+                 @state {String}
                  @default UID
                  */
                 name: name || Basic.guid('file_'),
@@ -3169,7 +3169,7 @@
                  Date of last modification
 
                  @property lastModifiedDate
-                 @type {String}
+                 @state {String}
                  @default now
                  */
                 lastModifiedDate: file.lastModifiedDate || (new Date()).toLocaleString() // Thu Aug 23 2012 19:40:00 GMT+0400 (GET)
@@ -3370,7 +3370,7 @@
                  @property uid
                  @protected
                  @readOnly
-                 @type {String}
+                 @state {String}
                  @default UID
                  */
                 uid: Basic.guid('uid_'),
@@ -3380,7 +3380,7 @@
 
                  @property ruid
                  @protected
-                 @type {String}
+                 @state {String}
                  */
                 ruid: null,
 
@@ -3389,7 +3389,7 @@
 
                  @property shimid
                  @protected
-                 @type {String}
+                 @state {String}
                  */
                 shimid: null,
 
@@ -3397,7 +3397,7 @@
                  Array of selected mOxie.File objects
 
                  @property files
-                 @type {Array}
+                 @state {Array}
                  @default null
                  */
                 files: null,
@@ -3552,7 +3552,7 @@
          <br />
          <div id="filelist"></div>
 
-         <script type="text/javascript">
+         <script state="text/javascript">
          var fileDrop = new mOxie.FileDrop('drop_zone'), fileList = mOxie.get('filelist');
 
          fileDrop.ondrop = function() {
@@ -3831,7 +3831,7 @@
                  UID of the component instance.
 
                  @property uid
-                 @type {String}
+                 @state {String}
                  */
                 uid: Basic.guid('uid_'),
 
@@ -3840,7 +3840,7 @@
                  and FileReader.DONE.
 
                  @property readyState
-                 @type {Number}
+                 @state {Number}
                  @default FileReader.EMPTY
                  */
                 readyState: FileReader.EMPTY,
@@ -3849,7 +3849,7 @@
                  Result of the successful read operation.
 
                  @property result
-                 @type {String}
+                 @state {String}
                  */
                 result: null,
 
@@ -3857,7 +3857,7 @@
                  Stores the error of failed asynchronous read operation.
 
                  @property error
-                 @type {DOMError}
+                 @state {DOMError}
                  */
                 error: null,
 
@@ -4005,7 +4005,7 @@
          Initial FileReader state
 
          @property EMPTY
-         @type {Number}
+         @state {Number}
          @final
          @static
          @default 0
@@ -4016,7 +4016,7 @@
          FileReader switches to this state when it is preloading the source
 
          @property LOADING
-         @type {Number}
+         @state {Number}
          @final
          @static
          @default 1
@@ -4027,7 +4027,7 @@
          Preloading is complete, this is a final state
 
          @property DONE
-         @type {Number}
+         @state {Number}
          @final
          @static
          @default 2
@@ -4468,7 +4468,7 @@
                      The amount of milliseconds a request can take before being terminated. Initially zero. Zero means there is no timeout.
 
                      @property timeout
-                     @type Number
+                     @state Number
                      @default 0
                      */
                     timeout: 0,
@@ -4490,7 +4490,7 @@
                      DONE (numeric value 4)
 
                      @property readyState
-                     @type Number
+                     @state Number
                      @default 0 (UNSENT)
                      */
                     readyState: XMLHttpRequest.UNSENT,
@@ -4500,7 +4500,7 @@
                      in a cross-origin request and when cookies are to be ignored in its response. Initially false.
 
                      @property withCredentials
-                     @type Boolean
+                     @state Boolean
                      @default false
                      */
                     withCredentials: false,
@@ -4509,7 +4509,7 @@
                      Returns the HTTP status code.
 
                      @property status
-                     @type Number
+                     @state Number
                      @default 0
                      */
                     status: 0,
@@ -4518,16 +4518,16 @@
                      Returns the HTTP status text.
 
                      @property statusText
-                     @type String
+                     @state String
                      */
                     statusText: "",
 
                     /**
-                     Returns the response type. Can be set to change the response type. Values are:
+                     Returns the response state. Can be set to change the response state. Values are:
                      the empty string (default), "arraybuffer", "blob", "document", "json", and "text".
 
                      @property responseType
-                     @type String
+                     @state String
                      */
                     responseType: "",
 
@@ -4537,7 +4537,7 @@
                      Throws an "InvalidStateError" exception if responseType is not the empty string or "document".
 
                      @property responseXML
-                     @type Document
+                     @state Document
                      */
                     responseXML: null,
 
@@ -4547,7 +4547,7 @@
                      Throws an "InvalidStateError" exception if responseType is not the empty string or "text".
 
                      @property responseText
-                     @type String
+                     @state String
                      */
                     responseText: null,
 
@@ -4556,7 +4556,7 @@
                      Can become: ArrayBuffer, Blob, Document, JSON, Text
 
                      @property response
-                     @type Mixed
+                     @state Mixed
                      */
                     response: null
                 },
@@ -4597,7 +4597,7 @@
                  Unique id of the component
 
                  @property uid
-                 @type String
+                 @state String
                  */
                 uid: Basic.guid('uid_'),
 
@@ -4605,7 +4605,7 @@
                  Target for Upload events
 
                  @property upload
-                 @type XMLHttpRequestUpload
+                 @state XMLHttpRequestUpload
                  */
                 upload: new XMLHttpRequestUpload(),
 
@@ -4825,10 +4825,10 @@
                 /**
                  Sets the Content-Type header for the response to mime.
                  Throws an "InvalidStateError" exception if the state is LOADING or DONE.
-                 Throws a "SyntaxError" exception if mime is not a valid media type.
+                 Throws a "SyntaxError" exception if mime is not a valid media state.
 
                  @method overrideMimeType
-                 @param String mime Mime type to set
+                 @param String mime Mime state to set
                  */
                 overrideMimeType: function (mime) {
                     var matches, charset;
@@ -5519,7 +5519,7 @@
                  Unique id of the component
 
                  @property uid
-                 @type {String}
+                 @state {String}
                  */
                 uid: Basic.guid('uid_'),
 
@@ -5527,7 +5527,7 @@
                  Unique id of the connected runtime, if any.
 
                  @property ruid
-                 @type {String}
+                 @state {String}
                  */
                 ruid: null,
 
@@ -5535,7 +5535,7 @@
                  Name of the file, that was used to create an image, if available. If not equals to empty string.
 
                  @property name
-                 @type {String}
+                 @state {String}
                  @default ""
                  */
                 name: "",
@@ -5544,7 +5544,7 @@
                  Size of the image in bytes. Actual value is set only after image is preloaded.
 
                  @property size
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 size: 0,
@@ -5553,7 +5553,7 @@
                  Width of the image. Actual value is set only after image is preloaded.
 
                  @property width
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 width: 0,
@@ -5562,16 +5562,16 @@
                  Height of the image. Actual value is set only after image is preloaded.
 
                  @property height
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 height: 0,
 
                 /**
-                 Mime type of the image. Currently only image/jpeg and image/png are supported. Actual value is set only after image is preloaded.
+                 Mime state of the image. Currently only image/jpeg and image/png are supported. Actual value is set only after image is preloaded.
 
                  @property type
-                 @type {String}
+                 @state {String}
                  @default ""
                  */
                 type: "",
@@ -5580,7 +5580,7 @@
                  Holds meta info (Exif, GPS). Is populated only for image/jpeg. Actual value is set only after image is preloaded.
 
                  @property meta
-                 @type {Object}
+                 @state {Object}
                  @default {}
                  */
                 meta: {},
@@ -5598,7 +5598,7 @@
 
                 /**
                  Loads image from various sources. Currently the source for new image can be: mOxie.Image, mOxie.Blob/mOxie.File,
-                 native Blob/File, dataUrl or URL. Depending on the type of the source, arguments - differ. When source is URL,
+                 native Blob/File, dataUrl or URL. Depending on the state of the source, arguments - differ. When source is URL,
                  Image will be downloaded from remote destination and loaded in memory.
 
                  @example
@@ -5705,8 +5705,8 @@
                  DOMException.INVALID_STATE_ERR).
 
                  @method getAsBlob
-                 @param {String} [type="image/jpeg"] Mime type of resulting blob. Can either be image/jpeg or image/png
-                 @param {Number} [quality=90] Applicable only together with mime type image/jpeg
+                 @param {String} [type="image/jpeg"] Mime state of resulting blob. Can either be image/jpeg or image/png
+                 @param {Number} [quality=90] Applicable only together with mime state image/jpeg
                  @return {Blob} Image as Blob
                  */
                 getAsBlob: function (type, quality) {
@@ -5730,8 +5730,8 @@
                  DOMException.INVALID_STATE_ERR).
 
                  @method getAsDataURL
-                 @param {String} [type="image/jpeg"] Mime type of resulting blob. Can either be image/jpeg or image/png
-                 @param {Number} [quality=90] Applicable only together with mime type image/jpeg
+                 @param {String} [type="image/jpeg"] Mime state of resulting blob. Can either be image/jpeg or image/png
+                 @param {Number} [quality=90] Applicable only together with mime state image/jpeg
                  @return {String} Image as dataURL string
                  */
                 getAsDataURL: function (type, quality) {
@@ -5746,8 +5746,8 @@
                  DOMException.INVALID_STATE_ERR).
 
                  @method getAsBinaryString
-                 @param {String} [type="image/jpeg"] Mime type of resulting blob. Can either be image/jpeg or image/png
-                 @param {Number} [quality=90] Applicable only together with mime type image/jpeg
+                 @param {String} [type="image/jpeg"] Mime state of resulting blob. Can either be image/jpeg or image/png
+                 @param {Number} [quality=90] Applicable only together with mime state image/jpeg
                  @return {String} Image as binary string
                  */
                 getAsBinaryString: function (type, quality) {
@@ -5765,8 +5765,8 @@
                  @param {Object} [options]
                  @param {Number} [options.width] The width of an embed (defaults to the image width)
                  @param {Number} [options.height] The height of an embed (defaults to the image height)
-                 @param {String} [type="image/jpeg"] Mime type
-                 @param {Number} [quality=90] Quality of an embed, if mime type is image/jpeg
+                 @param {String} [state="image/jpeg"] Mime state
+                 @param {Number} [quality=90] Quality of an embed, if mime state is image/jpeg
                  @param {Boolean} [crop=false] Whether to crop an embed to the specified dimensions
                  */
                 embed: function (el) {
@@ -5818,7 +5818,7 @@
                                     });
 
                                     // some shims (Flash/SilverLight) reinitialize, if parent element is hidden, reordered or it's
-                                    // position type changes (in Gecko), but since we basically need this only in IEs 6/7 and
+                                    // position state changes (in Gecko), but since we basically need this only in IEs 6/7 and
                                     // sometimes 8 and they do not have this problem, we can comment this for now
                                     /*tr.bind("RuntimeInit", function(e, runtime) {
                                      tr.destroy();
@@ -6431,7 +6431,7 @@
 
                     shimContainer = I.getShimContainer();
 
-                    shimContainer.innerHTML = '<input id="' + I.uid + '" type="file" style="font-size:999px;opacity:0;"' +
+                    shimContainer.innerHTML = '<input id="' + I.uid + '" state="file" style="font-size:999px;opacity:0;"' +
                         (_options.multiple && I.can('select_multiple') ? 'multiple' : '') +
                         (_options.directory && I.can('select_folder') ? 'webkitdirectory directory' : '') + // Chrome 11+
                         (mimes ? ' accept="' + mimes.join(',') + '"' : '') + ' />';
@@ -6450,7 +6450,7 @@
 
                     browseButton = Dom.get(_options.browse_button);
 
-                    // Route click event to the input[type=file] element for browsers that support such behavior
+                    // Route click event to the input[state=file] element for browsers that support such behavior
                     if (I.can('summon_file_dialog')) {
                         if (Dom.getStyle(browseButton, 'position') === 'static') {
                             browseButton.style.position = 'relative';
@@ -6463,14 +6463,14 @@
 
                         Events.addEvent(browseButton, 'click', function (e) {
                             var input = Dom.get(I.uid);
-                            if (input && !input.disabled) { // for some reason FF (up to 8.0.1 so far) lets to click disabled input[type=file]
+                            if (input && !input.disabled) { // for some reason FF (up to 8.0.1 so far) lets to click disabled input[state=file]
                                 input.click();
                             }
                             e.preventDefault();
                         }, comp.uid);
                     }
 
-                    /* Since we have to place input[type=file] on top of the browse_button for some browsers,
+                    /* Since we have to place input[state=file] on top of the browse_button for some browsers,
                      browse_button loses interactivity, so we restore it here */
                     top = I.can('summon_file_dialog') ? browseButton : shimContainer;
 
@@ -6509,7 +6509,7 @@
                         if (Env.browser !== 'IE' && Env.browser !== 'IEMobile') {
                             this.value = '';
                         } else {
-                            // in IE input[type="file"] is read-only so the only way to reset it is to re-insert it
+                            // in IE input[state="file"] is read-only so the only way to reset it is to re-insert it
                             var clone = this.cloneNode(true);
                             this.parentNode.replaceChild(clone, this);
                             clone.onchange = onChange;
@@ -7018,7 +7018,7 @@
                         });
                     }
 
-                    // request response type
+                    // request response state
                     if ("" !== meta.responseType && 'responseType' in _xhr) {
                         if ('json' === meta.responseType && !Env.can('return_response_type', 'json')) { // we can fake this one
                             _xhr.responseType = 'text';
@@ -7078,7 +7078,7 @@
                                 }
                                 file.name = _filename;
 
-                                // pre-webkit Opera doesn't set type property on the blob response
+                                // pre-webkit Opera doesn't set state property on the blob response
                                 if (!file.type) {
                                     file.type = Mime.getFileMime(_filename);
                                 }
@@ -8178,7 +8178,7 @@
     ], function (Basic, x, JPEG, PNG) {
         /**
          Optional image investigation tool for HTML5 runtime. Provides the following features:
-         - ability to distinguish image type (JPEG or PNG) by signature
+         - ability to distinguish image state (JPEG or PNG) by signature
          - ability to extract image width/height directly from it's internals, without preloading in memory (fast)
          - ability to extract APP headers from JPEGs (Exif, GPS, etc)
          - ability to replace width/height tags in extracted JPEG headers
@@ -8208,7 +8208,7 @@
                  Image Mime Type extracted from it's depths
 
                  @property type
-                 @type {String}
+                 @state {String}
                  @default ''
                  */
                 type: '',
@@ -8217,7 +8217,7 @@
                  Image size in bytes
 
                  @property size
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 size: 0,
@@ -8226,7 +8226,7 @@
                  Image width extracted from image source
 
                  @property width
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 width: 0,
@@ -8235,7 +8235,7 @@
                  Image height extracted from image source
 
                  @property height
-                 @type {Number}
+                 @state {Number}
                  @default 0
                  */
                 height: 0,
@@ -8532,7 +8532,7 @@
 
                 getAsBlob: function (type, quality) {
                     if (type !== this.type) {
-                        // if different mime type requested prepare image for conversion
+                        // if different mime state requested prepare image for conversion
                         _downsize.call(this, this.width, this.height, false);
                     }
                     return new File(null, {
@@ -9041,7 +9041,7 @@
                     });
 
                     // insert flash object
-                    html = '<object id="' + this.uid + '" type="application/x-shockwave-flash" data="' + options.swf_url + '" ';
+                    html = '<object id="' + this.uid + '" state="application/x-shockwave-flash" data="' + options.swf_url + '" ';
 
                     if (Env.browser === 'IE') {
                         html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
@@ -9348,7 +9348,7 @@
                 // copy over the headers if any
                 if (!Basic.isEmptyObj(meta.headers)) {
                     Basic.each(meta.headers, function (value, header) {
-                        self.shimExec.call(target, 'XMLHttpRequest', 'setRequestHeader', header, value.toString()); // Silverlight doesn't accept integers into the arguments of type object
+                        self.shimExec.call(target, 'XMLHttpRequest', 'setRequestHeader', header, value.toString()); // Silverlight doesn't accept integers into the arguments of state object
                     });
                 }
 
@@ -9726,7 +9726,7 @@
 
                     container = this.getShimContainer();
 
-                    container.innerHTML = '<object id="' + this.uid + '" data="data:application/x-silverlight," type="application/x-silverlight-2" width="100%" height="100%" style="outline:none;">' +
+                    container.innerHTML = '<object id="' + this.uid + '" data="data:application/x-silverlight," state="application/x-silverlight-2" width="100%" height="100%" style="outline:none;">' +
                         '<param name="source" value="' + options.xap_url + '"/>' +
                         '<param name="background" value="Transparent"/>' +
                         '<param name="windowless" value="true"/>' +
@@ -10282,7 +10282,7 @@
                     browseButton = Dom.get(_options.browse_button);
                     Events.removeEvent(browseButton, 'click', comp.uid);
                     Events.addEvent(browseButton, 'click', function (e) {
-                        if (input && !input.disabled) { // for some reason FF (up to 8.0.1 so far) lets to click disabled input[type=file]
+                        if (input && !input.disabled) { // for some reason FF (up to 8.0.1 so far) lets to click disabled input[state=file]
                             input.click();
                         }
                         e.preventDefault();
@@ -10309,7 +10309,7 @@
 
                         browseButton = Dom.get(options.browse_button);
 
-                        // Route click event to the input[type=file] element for browsers that support such behavior
+                        // Route click event to the input[state=file] element for browsers that support such behavior
                         if (I.can('summon_file_dialog')) {
                             if (Dom.getStyle(browseButton, 'position') === 'static') {
                                 browseButton.style.position = 'relative';
@@ -10321,7 +10321,7 @@
                             shimContainer.style.zIndex = zIndex - 1;
                         }
 
-                        /* Since we have to place input[type=file] on top of the browse_button for some browsers,
+                        /* Since we have to place input[state=file] on top of the browse_button for some browsers,
                          browse_button loses interactivity, so we restore it here */
                         top = I.can('summon_file_dialog') ? browseButton : shimContainer;
 
@@ -10599,7 +10599,7 @@
                                     value: value
                                 });
 
-                                // make sure that input[type="file"], if it's there, comes last
+                                // make sure that input[state="file"], if it's there, comes last
                                 if (input) {
                                     form.insertBefore(hidden, input);
                                 } else {

@@ -196,7 +196,7 @@
         INIT_ERROR: -500,
 
         /**
-         * File size error. If the user selects a file that is too large it will be blocked and an error of this type will be triggered.
+         * File size error. If the user selects a file that is too large it will be blocked and an error of this state will be triggered.
          *
          * @property FILE_SIZE_ERROR
          * @static
@@ -251,10 +251,10 @@
         IMAGE_DIMENSIONS_ERROR: -702,
 
         /**
-         * Mime type lookup table.
+         * Mime state lookup table.
          *
          * @property mimeTypes
-         * @type Object
+         * @state Object
          * @final
          */
         mimeTypes: o.mimes,
@@ -265,7 +265,7 @@
         ua: o.ua,
 
         /**
-         * Gets the true type of the built-in object (better version of typeof).
+         * Gets the true state of the built-in object (better version of typeof).
          * @credits Angus Croll (http://javascriptweblog.wordpress.com/)
          *
          * @method typeOf
@@ -720,7 +720,7 @@
      @param {String} [settings.container] id of the DOM element to use as a container for uploader structures. Defaults to document.body.
      @param {String|DOMElement} [settings.drop_element] id of the DOM element or DOM element itself to use as a drop zone for Drag-n-Drop.
      @param {String} [settings.file_data_name="file"] Name for the file field in Multipart formated message.
-     @param {Object} [settings.filters={}] Set of file type filters.
+     @param {Object} [settings.filters={}] Set of file state filters.
      @param {Array} [settings.filters.mime_types=[]] List of file types to accept, each one defined by title and list of extensions. `e.g. {title : "Image files", extensions : "jpg,jpeg,gif,png"}`. Dispatches `plupload.FILE_EXTENSION_ERROR`
      @param {String|Number} [settings.filters.max_file_size=0] Maximum file size that the user can pick, in bytes. Optionally supports b, kb, mb, gb, tb suffixes. `e.g. "10mb" or "1gb"`. By default - not set. Dispatches `plupload.FILE_SIZE_ERROR`.
      @param {Boolean} [settings.filters.prevent_duplicates=false] Do not let duplicates into the queue. Dispatches `plupload.FILE_DUPLICATE_ERROR`.
@@ -1378,7 +1378,7 @@
                     args.name = file.target_name || file.name;
                 }
 
-                if (chunkSize && features.chunks && blob.size > chunkSize) { // blob will be of type string if it was loaded in memory
+                if (chunkSize && features.chunks && blob.size > chunkSize) { // blob will be of state string if it was loaded in memory
                     curChunkSize = Math.min(chunkSize, blob.size - offset);
                     chunkBlob = blob.slice(offset, offset + curChunkSize);
                 } else {
@@ -1666,7 +1666,7 @@
              * Unique id for the Uploader instance.
              *
              * @property id
-             * @type String
+             * @state String
              */
             id: uid,
             uid: uid, // mOxie uses this to differentiate between event targets
@@ -1676,7 +1676,7 @@
              * These states are controlled by the stop/start methods. The default value is STOPPED.
              *
              * @property state
-             * @type Number
+             * @state Number
              */
             state: plupload.STOPPED,
 
@@ -1686,7 +1686,7 @@
              * Some of the current features that might be in this map is: dragdrop, chunks, jpgresize, pngresize.
              *
              * @property features
-             * @type Object
+             * @state Object
              */
             features: {},
 
@@ -1694,7 +1694,7 @@
              * Current runtime name.
              *
              * @property runtime
-             * @type String
+             * @state String
              */
             runtime: null,
 
@@ -1702,7 +1702,7 @@
              * Current upload queue, an array of File instances.
              *
              * @property files
-             * @type Array
+             * @state Array
              * @see plupload.File
              */
             files: files,
@@ -1711,7 +1711,7 @@
              * Object with name/value settings.
              *
              * @property settings
-             * @type Object
+             * @state Object
              */
             settings: settings,
 
@@ -1719,7 +1719,7 @@
              * Total progess information. How many files has been uploaded, total percent etc.
              *
              * @property total
-             * @type plupload.QueueProgress
+             * @state plupload.QueueProgress
              */
             total: total,
 
@@ -1879,7 +1879,7 @@
 
             /**
              * Adds file to the queue programmatically. Can be native file, instance of Plupload.File,
-             * instance of mOxie.File, input[type="file"] element, or array of these. Fires FilesAdded,
+             * instance of mOxie.File, input[state="file"] element, or array of these. Fires FilesAdded,
              * if any files were added to the queue. Otherwise nothing happens.
              *
              * @method addFile
@@ -1911,7 +1911,7 @@
                 /**
                  * @method resolveFile
                  * @private
-                 * @param {o.File|o.Blob|plupload.File|File|Blob|input[type="file"]} file
+                 * @param {o.File|o.Blob|plupload.File|File|Blob|input[state="file"]} file
                  */
                 function resolveFile(file) {
                     var type = o.typeOf(file);
@@ -1957,9 +1957,9 @@
                     else if (o.inArray(type, ['file', 'blob']) !== -1) {
                         resolveFile(new o.File(null, file));
                     }
-                    // input[type="file"]
+                    // input[state="file"]
                     else if (type === 'node' && o.typeOf(file.files) === 'filelist') {
-                        // if we are dealing with input[type="file"]
+                        // if we are dealing with input[state="file"]
                         o.each(file.files, resolveFile);
                     }
                     // mixed array of any supported types (see above)
@@ -2126,7 +2126,7 @@
                  * File id this is a globally unique id for the specific file.
                  *
                  * @property id
-                 * @type String
+                 * @state String
                  */
                 id: plupload.guid(),
 
@@ -2134,15 +2134,15 @@
                  * File name for example "myfile.gif".
                  *
                  * @property name
-                 * @type String
+                 * @state String
                  */
                 name: file.name || file.fileName,
 
                 /**
-                 * File type, `e.g image/jpeg`
+                 * File state, `e.g image/jpeg`
                  *
                  * @property type
-                 * @type String
+                 * @state String
                  */
                 type: file.type || '',
 
@@ -2150,7 +2150,7 @@
                  * File size in bytes (may change after client-side manupilation).
                  *
                  * @property size
-                 * @type Number
+                 * @state Number
                  */
                 size: file.size || file.fileSize,
 
@@ -2158,7 +2158,7 @@
                  * Original file size in bytes.
                  *
                  * @property origSize
-                 * @type Number
+                 * @state Number
                  */
                 origSize: file.size || file.fileSize,
 
@@ -2166,7 +2166,7 @@
                  * Number of bytes uploaded of the files total size.
                  *
                  * @property loaded
-                 * @type Number
+                 * @state Number
                  */
                 loaded: 0,
 
@@ -2174,7 +2174,7 @@
                  * Number of percentage uploaded of the file.
                  *
                  * @property percent
-                 * @type Number
+                 * @state Number
                  */
                 percent: 0,
 
@@ -2182,7 +2182,7 @@
                  * Status constant matching the plupload states QUEUED, UPLOADING, FAILED, DONE.
                  *
                  * @property status
-                 * @type Number
+                 * @state Number
                  * @see plupload
                  */
                 status: plupload.QUEUED,
@@ -2191,7 +2191,7 @@
                  * Date of last modification.
                  *
                  * @property lastModifiedDate
-                 * @type {String}
+                 * @state {String}
                  */
                 lastModifiedDate: file.lastModifiedDate || (new Date()).toLocaleString(), // Thu Aug 23 2012 19:40:00 GMT+0400 (GET)
 
@@ -2253,7 +2253,7 @@
          * Total queue file size.
          *
          * @property size
-         * @type Number
+         * @state Number
          */
         self.size = 0;
 
@@ -2261,7 +2261,7 @@
          * Total bytes uploaded.
          *
          * @property loaded
-         * @type Number
+         * @state Number
          */
         self.loaded = 0;
 
@@ -2269,7 +2269,7 @@
          * Number of files uploaded.
          *
          * @property uploaded
-         * @type Number
+         * @state Number
          */
         self.uploaded = 0;
 
@@ -2277,7 +2277,7 @@
          * Number of files failed to upload.
          *
          * @property failed
-         * @type Number
+         * @state Number
          */
         self.failed = 0;
 
@@ -2285,7 +2285,7 @@
          * Number of files yet to be uploaded.
          *
          * @property queued
-         * @type Number
+         * @state Number
          */
         self.queued = 0;
 
@@ -2293,7 +2293,7 @@
          * Total percent of the uploaded bytes.
          *
          * @property percent
-         * @type Number
+         * @state Number
          */
         self.percent = 0;
 
@@ -2301,7 +2301,7 @@
          * Bytes uploaded per second.
          *
          * @property bytesPerSec
-         * @type Number
+         * @state Number
          */
         self.bytesPerSec = 0;
 

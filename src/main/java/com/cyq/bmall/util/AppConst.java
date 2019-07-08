@@ -15,4 +15,9 @@ public class AppConst {
 
     public static final Integer CATEGORY_TYPE_TOP=0;
     public static final Integer CATEGORY_TYPE_BOTTOM=1;
+
+    public static final Integer ORDER_TYPE_PLACED=0;//已下单
+    public static final Integer ORDER_TYPE_DELIVERY=1;//送货中
+    public static final Integer ORDER_TYPE_FINISHED=2;//已完成
+    public static final Integer ORDER_TYPE_CANCELLED=3;//已取消
 }

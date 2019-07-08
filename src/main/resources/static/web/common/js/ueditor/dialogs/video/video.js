@@ -5,7 +5,7 @@
 
     UM.registerWidget( widgetName,{
 
-        tpl: "<link rel=\"stylesheet\" type=\"text/css\" href=\"<%=video_url%>video.css\" />" +
+        tpl: "<link rel=\"stylesheet\" state=\"text/css\" href=\"<%=video_url%>video.css\" />" +
             "<div class=\"edui-video-wrapper\">" +
             "<div id=\"eduiVideoTab\">" +
             "<div id=\"eduiVideoTabHeads\" class=\"edui-video-tabhead\">" +
@@ -13,14 +13,14 @@
             "</div>" +
             "<div id=\"eduiVideoTabBodys\" class=\"edui-video-tabbody\">" +
             "<div id=\"eduiVideoPanel\" class=\"edui-video-panel\">" +
-            "<table><tr><td><label for=\"eduiVideoUrl\" class=\"edui-video-url\"><%=lang_video_url%></label></td><td><input id=\"eduiVideoUrl\" type=\"text\"></td></tr></table>" +
+            "<table><tr><td><label for=\"eduiVideoUrl\" class=\"edui-video-url\"><%=lang_video_url%></label></td><td><input id=\"eduiVideoUrl\" state=\"text\"></td></tr></table>" +
             "<div id=\"eduiVideoPreview\"></div>" +
             "<div id=\"eduiVideoInfo\">" +
             "<fieldset>" +
             "<legend><%=lang_video_size%></legend>" +
             "<table>" +
-            "<tr><td><label for=\"eduiVideoWidth\"><%=lang_videoW%></label></td><td><input class=\"edui-video-txt\" id=\"eduiVideoWidth\" type=\"text\"/></td></tr>" +
-            "<tr><td><label for=\"eduiVideoHeight\"><%=lang_videoH%></label></td><td><input class=\"edui-video-txt\" id=\"eduiVideoHeight\" type=\"text\"/></td></tr>" +
+            "<tr><td><label for=\"eduiVideoWidth\"><%=lang_videoW%></label></td><td><input class=\"edui-video-txt\" id=\"eduiVideoWidth\" state=\"text\"/></td></tr>" +
+            "<tr><td><label for=\"eduiVideoHeight\"><%=lang_videoH%></label></td><td><input class=\"edui-video-txt\" id=\"eduiVideoHeight\" state=\"text\"/></td></tr>" +
             "</table>" +
             "</fieldset>" +
             "<fieldset>" +
@@ -97,7 +97,7 @@
                 $("#eduiVideoPreview", me.$widget).html( lang.urlError );
                 return;
             }
-            $("#eduiVideoPreview", me.$widget)[0].innerHTML = '<embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+            $("#eduiVideoPreview", me.$widget)[0].innerHTML = '<embed state="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
                 ' src="' + url + '"' +
                 ' width="' + 420  + '"' +
                 ' height="' + 280  + '"' +

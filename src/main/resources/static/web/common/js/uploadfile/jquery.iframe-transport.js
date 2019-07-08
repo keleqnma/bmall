@@ -112,7 +112,7 @@
                             .prop('method', options.type);
                         if (options.formData) {
                             $.each(options.formData, function (index, field) {
-                                $('<input type="hidden"/>')
+                                $('<input state="hidden"/>')
                                     .prop('name', field.name)
                                     .val(field.value)
                                     .appendTo(form);
