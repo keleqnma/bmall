@@ -1,12 +1,7 @@
 ## 简介
+模板源于https://github.com/sail-y/spring-boot-admin, 自己做了一些改动
 
-[kotlin版本](https://github.com/sail-y/spring-boot-admin-kotlin)
-
-
-[java版本](https://github.com/sail-y/spring-boot-admin)
-
-
-简单的后台开发模板框架，具备用户管理，菜单管理和角色管理3个功能，权限控制到按钮层级。       
+简单的后台模板框架，具备用户管理，菜单管理，商品管理，商品分类管理，订单管理，商家管理和角色管理, 权限控制到按钮层级。       
 
 
 采用JWT+Spring Security进行权限验证和会话保持
@@ -27,7 +22,7 @@
 
 ## 修改application-dev.yml里的数据库连接
 
-执行`mysql -uroot -p 数据库 < dmc.sql`导入数据库脚本。
+执行`mysql -uroot -p 数据库 < bmall.sql`导入数据库脚本。
 
 直接Run`DMCApplication`启动后访问：http://localhost:10000/web/views/login/login.html
 
