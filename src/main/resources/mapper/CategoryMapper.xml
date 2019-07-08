@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyq.bmall.mapper.CategoryMapper">
+
+
+    <insert id="save" parameterType="com.cyq.bmall.model.Category">
+        INSERT INTO bmall.category (ID, NAME, REMARK, SEQ, PID, type)
+        VALUES (#{id}, #{name}, #{remark},
+                #{seq}, #{pid}, #{type})
+    </insert>
+    <update id="update" parameterType="com.cyq.bmall.model.Category">
+        UPDATE bmall.category
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            pid = #{pid},
+        </set>
+
+        WHERE ID = #{id}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM bmall.category
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="getCategoryList" resultType="com.cyq.bmall.model.Category">
+
+        SELECT c.*
+        FROM bmall.category c
+        order by c.seq
+    </select>
+
+    <select id="getById" resultType="com.cyq.bmall.model.Category">
+        SELECT
+            c.*,
+            (SELECT p.name
+             FROM bmall.category p
+             WHERE c.PID = p.ID) pname
+        FROM
+            bmall.category c
+        WHERE c.ID = #{id}
+    </select>
+
+</mapper>

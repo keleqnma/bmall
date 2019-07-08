@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyq.bmall.mapper.CommodityMapper">
+
+
+    <insert id="save" parameterType="com.cyq.bmall.model.Commodity">
+        INSERT INTO bmall.commodity (ID,NAME,price,description)
+        VALUES (#{id}, #{name}, #{price},#{description})
+    </insert>
+
+    <update id="update" parameterType="com.cyq.bmall.model.Commodity">
+        UPDATE bmall.commodity
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="categoryId != null">
+                categoryId = #{categoryId},
+            </if>
+            <if test="shopId != null">
+                shopId = #{shopId},
+            </if>
+            modify_time = now(),
+        </set>
+
+        WHERE ID = #{id}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM bmall.commodity
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="getCommodityList" resultType="com.cyq.bmall.model.Commodity">
+
+        SELECT c.*
+        FROM bmall.commodity c
+        order by c.id
+    </select>
+    
+    <select id="getById" resultType="com.cyq.bmall.model.Commodity">
+        SELECT
+            c.*,
+        FROM
+            bmall.commodity c
+        WHERE c.ID = #{id}
+    </select>
+
+    <select id="getShopCommodityIds" resultType="java.lang.Long">
+        SELECT c.id
+        FROM bmall.commodity c INNER JOIN bmall.shop_commodity sc ON c.ID = sc.COMMODITY_ID
+        WHERE sc.SHOP_ID = #{shopId}
+    </select>
+
+    <select id="getCategoryCommodityIds" resultType="java.lang.Long">
+        SELECT c.id
+        FROM bmall.commodity c INNER JOIN bmall.category_commodity cc ON c.ID = cc.COMMODITY_ID
+        WHERE cc.CATEGORY_ID = #{categoryId}
+    </select>
+</mapper>
