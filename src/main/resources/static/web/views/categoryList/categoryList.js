@@ -18,6 +18,7 @@ define(function (require, exports, module) {
         initialize: function () {
             this.model = new Backbone.Model();
             this.model.set("resourceData", resourceData);
+            this.model.set("categoryData", categoryData);
             this.getTree();
             this.hideView();
 

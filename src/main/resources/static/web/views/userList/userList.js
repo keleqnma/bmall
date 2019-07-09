@@ -18,7 +18,8 @@ define(function (require, exports, module) {
             "click .close-btn": "handlerClose",
             "click .auth-sure": "handlerAuth",
             "click .auth-btn": "handlerShow",
-            "click .refresh-btn": "handlerRefresh"
+            "click .refresh-btn": "handlerRefresh",
+            "click .classify-btn": "handlerReload"
         },
         template: _.template($('#buttonTemplate').html()),
 
@@ -36,15 +37,14 @@ define(function (require, exports, module) {
             $("#toolBox").empty().append(this.template(this.model.toJSON()));
         },
 
-        initData: function () {
+        dealData: function(url){
             userTable = $('#table').DataTable({
                 "ajax": {
-                    url: baseUrl + "/user/tables"
+                    url: baseUrl + url
                 },
                 "columns": [
                     {"data": "username"},
                     {"data": "name"},
-                    {"data": "createTime"},
                     {
                         render: function (data, type, row, meta) {
                             var str = "";
@@ -54,7 +54,7 @@ define(function (require, exports, module) {
                             }
 
                             if ($.inArray("/user/editPwd-post", resourceData) > -1) {
-                                str += "<button data-text='修改密码'  data-id='editPwd' data-link='../editPassword/editOrder.html?id=" + row.id + "' class='btn btn-primary pwd-btn btn-xs margin-right-5'><i class='fa fa-key' aria-hidden='true'></i> 修改密码</button>"
+                                str += "<button data-text='修改密码'  data-id='editPwd' data-link='../editPassword/editPassword.html?id=" + row.id + "' class='btn btn-primary pwd-btn btn-xs margin-right-5'><i class='fa fa-key' aria-hidden='true'></i> 修改密码</button>"
                             }
 
                             if ($.inArray("/user/grant-post", resourceData) > -1) {
@@ -71,6 +71,12 @@ define(function (require, exports, module) {
                     }
                 ]
             });
+        },
+
+        initData: function () {
+            var _this = this;
+
+            _this.dealData("/user/tables");
         },
 
         handlerEdit: function (event) {
@@ -111,6 +117,12 @@ define(function (require, exports, module) {
         handlerAdd: function (event) {
             var id = $(".item-ul li.active", parent.document).data("id");
             addTab(event, true, id);
+        },
+
+        handlerReload: function (event) {
+            var _this = this;
+            var userRole = $(".type-sel").val();
+            window.location.href=(userRole == 0)? '../adminList/adminList.html':'../shopList/shopList.html';
         },
 
         getData: function () {
@@ -229,4 +241,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./orderList.js');
+seajs.use('./userList.js');

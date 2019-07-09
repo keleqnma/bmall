@@ -1,9 +1,12 @@
 package com.cyq.bmall.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.cyq.bmall.model.Category;
 import com.cyq.bmall.model.Commodity;
+import com.cyq.bmall.model.Shop;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -65,4 +68,20 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
      * @return 商品ID
      */
     List<Long> getCategoryCommodityIds(Long categoryId);
+
+    /**
+     * 查询某个商品的分类
+     * @param commodityId 商品Id
+     * @return 商品ID
+     */
+    Category getCategoryCommodities(Long commodityId);
+
+    //某个时间段内前十的热销商品
+    List<Commodity> bestSellingCommodity(Date dateBegin, Date dateEnd);
+
+    //某个时间段内评价数量前十商品
+    List<Commodity> bestEvaluationQuantityCommodity(Date dateBegin, Date dateEnd);
+
+    //某个时间段内好评率前十商品
+    List<Commodity> bestEvaluationRatingCommodity(Date dateBegin, Date dateEnd);
 }

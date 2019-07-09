@@ -49,4 +49,6 @@ public interface CategoryMapper extends BaseMapper<Category> {
      * @return 商品分类
      */
     Category getById(Long id);
+
+    Category getCategoryCommodities(Long commodityId);
 }

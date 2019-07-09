@@ -4,9 +4,11 @@ $(function () {
 
 
     window.resourceData = localStorage.getItem("resourceList");
+    window.categoryData = localStorage.getItem("categoryList");
 
     if (resourceData) {
         resourceData = $.parseJSON(resourceData);
+        categoryData = $.parseJSON(categoryData);
     }
 
     if (!token && link.indexOf("login") < 0) {

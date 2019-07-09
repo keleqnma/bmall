@@ -87,4 +87,8 @@ public interface UserService {
     List<String> getUserRoleNames(Long id);
 
     DataTable<User> tables(UserVO userVO);
+
+    DataTable<User> shopTables(UserVO userVO);
+
+    DataTable<User> adminTables(UserVO userVO);
 }

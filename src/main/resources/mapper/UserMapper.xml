@@ -29,10 +29,10 @@
             <if test="password !=null">
                 password = #{password},
             </if>
-            modify_time = now(),
         </set>
         where id = #{id}
     </update>
+
     <delete id="deleteById">
         DELETE FROM bmall.user
         WHERE ID = #{id}
@@ -91,4 +91,10 @@
         WHERE id = #{id}
     </select>
 
+    <select id="getRoleUsers" parameterType="map" resultType="com.cyq.bmall.model.User">
+            SELECT u.*
+            FROM bmall.user u INNER JOIN bmall.user_role ur ON u.id = ur.user_id
+            WHERE ur.role_id = #{type}
+            order by u.id
+    </select>
 </mapper>

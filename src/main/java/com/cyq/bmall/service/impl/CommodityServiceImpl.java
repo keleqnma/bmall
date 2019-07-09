@@ -1,9 +1,7 @@
 package com.cyq.bmall.service.impl;
 
+import com.cyq.bmall.mapper.*;
 import com.cyq.bmall.mapper.CommodityMapper;
-import com.cyq.bmall.mapper.CommodityMapper;
-import com.cyq.bmall.mapper.ResourceMapper;
-import com.cyq.bmall.mapper.UserMapper;
 import com.cyq.bmall.model.Menu;
 import com.cyq.bmall.model.Commodity;
 import com.cyq.bmall.model.Commodity;
@@ -36,7 +34,7 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private ResourceMapper resourceMapper;
+    private CategoryMapper categoryMapper;
 
     @Override
     public void add(Commodity commodity) {
@@ -80,9 +78,19 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public DataTable<Commodity> tables(CommodityVO commodityVO) {
-        PageHelper.offsetPage(commodityVO.getStart(), commodityVO.getLength());
 
-        List<Commodity> commodities = commodityMapper.getCommodityList(new HashMap<>());
+        Map<String, Object> params = new HashMap<>();
+        Long currUid = SessionUtil.getCurrUid();
+        if (currUid != null && !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue() ) ) {
+            params.put("userId", currUid);// 查自己有权限的商品
+        }
+
+        PageHelper.offsetPage(commodityVO.getStart(), commodityVO.getLength());
+        List<Commodity> commodities = commodityMapper.getCommodityList(params);
+
+        //for(Commodity commodity:commodities){
+        //    commodity.setCategoryName(categoryMapper.getCategoryCommodities(commodity.getId()).getName());
+        //}
         DataTable<Commodity> tables = new DataTable<>();
         tables.setRecordsTotal(((Page) commodities).getTotal());
         tables.setRecordsFiltered(tables.getRecordsTotal());

@@ -11,15 +11,27 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 08/07/2019 12:53:34
+ Date: 10/07/2019 00:04:30
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP DATABASE IF EXISTS bmall;
-CREATE DATABASE bmall;
-USE bmall;
+-- ----------------------------
+-- Table structure for buyer
+-- ----------------------------
+DROP TABLE IF EXISTS `buyer`;
+CREATE TABLE `buyer`  (
+  `id` bigint(36) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of buyer
+-- ----------------------------
+INSERT INTO `buyer` VALUES (0, 'test');
+
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------
@@ -37,6 +49,8 @@ CREATE TABLE `category`  (
 -- Records of category
 -- ----------------------------
 INSERT INTO `category` VALUES (1, NULL, 'test', 1, 'test');
+INSERT INTO `category` VALUES (6584078032897024, 1, '1', 1, 'test2');
+INSERT INTO `category` VALUES (6584078554694656, 6584078032897024, '3', 3, 'test3');
 
 -- ----------------------------
 -- Table structure for category_commodity
@@ -56,10 +70,10 @@ CREATE TABLE `commodity`  (
   `id` bigint(36) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `price` double NULL DEFAULT NULL,
-  `descreption` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `exist` int(11) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10375 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6581291745608705 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of commodity
@@ -71,7 +85,7 @@ INSERT INTO `commodity` VALUES (4, '享利运 高跟鞋女 2019新款职业细�
 INSERT INTO `commodity` VALUES (5, '享利运 高跟鞋女 2019新款韩版尖头单鞋女鞋绒面一字扣猫跟百搭办公室通勤上班时尚高跟凉鞋女 黑色 35', 89, '享利运 高跟鞋女 2019新款韩版尖头单鞋女鞋绒面一字扣猫跟百搭办公室通勤上班时尚高跟凉鞋女 黑色 35', 1);
 INSERT INTO `commodity` VALUES (6, '享利运 高跟鞋女 2019新款欧美时尚一字扣酒杯跟女鞋性感百搭高跟婚鞋单鞋女 黑色（8.5CM） 36', 98, '享利运 高跟鞋女 2019新款欧美时尚一字扣酒杯跟女鞋性感百搭高跟婚鞋单鞋女 黑色（8.5CM） 36', 1);
 INSERT INTO `commodity` VALUES (7, '【京东优品】欧美春夏新款尖头12cm高跟鞋女细跟黑色一字扣带性感浅口大码凉鞋 黑色8cm 43', 369, '【京东优品】欧美春夏新款尖头12cm高跟鞋女细跟黑色一字扣带性感浅口大码凉鞋 黑色8cm 43', 1);
-INSERT INTO `commodity` VALUES (8, '图亚格 2019新款高跟鞋女 细跟韩版休闲百搭一字带高跟夜店性感OL职业工作凉单鞋女 黑色9cm 36标码', 168, '图亚格 2019新款高跟鞋女 细跟韩版休闲百搭一字带高跟夜店性感OL职业工作凉单鞋女 黑色9cm 36标码', 1);
+INSERT INTO `commodity` VALUES (8, '图亚格 2019新款高跟鞋女 细跟韩版休闲百搭一字带高跟夜店性感OL职业工作凉单鞋女 黑色9cm 36标码', 99, '图亚格 2019新款高跟鞋女 细跟韩版休闲百搭一字带高跟夜店性感OL职业工作凉单鞋女 黑色9cm 36标码', 1);
 INSERT INTO `commodity` VALUES (9, '享利运 高跟鞋2019夏季新款韩版时尚简约细跟高跟绸缎面浅口尖头镂空性感百搭网红单鞋一字扣带凉鞋 黑色 37', 89, '享利运 高跟鞋2019夏季新款韩版时尚简约细跟高跟绸缎面浅口尖头镂空性感百搭网红单鞋一字扣带凉鞋 黑色 37', 1);
 INSERT INTO `commodity` VALUES (10, '鲨之魅2019新款高跟鞋女浅口细跟尖头晚宴婚鞋高跟OL职业工作鞋优雅大小码礼服女单鞋 粉色 38', 148, '鲨之魅2019新款高跟鞋女浅口细跟尖头晚宴婚鞋高跟OL职业工作鞋优雅大小码礼服女单鞋 粉色 38', 1);
 INSERT INTO `commodity` VALUES (11, '享利运 高跟鞋女 2019夏季新款亮片新款尖头一字扣带凉鞋女细跟仙女风单鞋 黑色 35', 98, '享利运 高跟鞋女 2019夏季新款亮片新款尖头一字扣带凉鞋女细跟仙女风单鞋 黑色 35', 1);
@@ -10440,6 +10454,34 @@ INSERT INTO `commodity` VALUES (10373, '先佳TWS真无线双耳蓝牙耳机I7S�
 INSERT INTO `commodity` VALUES (10374, '扶贫特产【米脂馆】桃花峁米脂黄小米小米粥2018新米养生粥2.5kg 杂粮月子米农家吃的 粮食陕西陕北特产 布袋装', 49.9, '扶贫特产【米脂馆】桃花峁米脂黄小米小米粥2018新米养生粥2.5kg 杂粮月子米农家吃的 粮食陕西陕北特产 布袋装', 1);
 
 -- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order`  (
+  `id` bigint(36) NOT NULL,
+  `userId` bigint(36) NULL DEFAULT NULL,
+  `issueTime` datetime(6) NULL DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `price` double(10, 2) NULL DEFAULT NULL,
+  `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
+INSERT INTO `order` VALUES (0, 0, '2019-07-09 00:10:54.000000', '99', 99.00, '3');
+
+-- ----------------------------
+-- Table structure for order_commodity
+-- ----------------------------
+DROP TABLE IF EXISTS `order_commodity`;
+CREATE TABLE `order_commodity`  (
+  `order_id` bigint(36) NULL DEFAULT NULL,
+  `commodity_id` bigint(36) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for resource
 -- ----------------------------
 DROP TABLE IF EXISTS `resource`;
@@ -10465,10 +10507,10 @@ INSERT INTO `resource` VALUES (0, '系统管理', NULL, 0, NULL, NULL, NULL, 0);
 INSERT INTO `resource` VALUES (1, '角色管理', '角色列表', 2, '../rolelist/rolelist.html', NULL, 0, 0);
 INSERT INTO `resource` VALUES (2, '用户管理', '用户列表', 3, '../userlist/userlist.html', NULL, 0, 0);
 INSERT INTO `resource` VALUES (3, '资源管理', '管理系统中所有的菜单或功能', 1, '../menu/menu.html', NULL, 0, 0);
-INSERT INTO `resource` VALUES (4, '商城管理', NULL, 0, NULL, NULL, NULL, 0);
+INSERT INTO `resource` VALUES (4, '商城管理', NULL, 0, NULL, '', NULL, 0);
 INSERT INTO `resource` VALUES (5, '商品管理', '商品列表', 4, '../commodityList/commodityList.html', NULL, 4, 0);
 INSERT INTO `resource` VALUES (6, '商品分类管理', '商品分类列表', 5, '../categoryList/categoryList.html', '', 4, 0);
-INSERT INTO `resource` VALUES (7, '订单管理', '订单列表', 6, '../OrderList/OrderList.html', NULL, 4, 0);
+INSERT INTO `resource` VALUES (7, '订单管理', '订单列表', 6, '../orderList/orderList.html', NULL, 4, 0);
 INSERT INTO `resource` VALUES (8, '添加角色', NULL, 3, '/role', 'post', 1, 1);
 INSERT INTO `resource` VALUES (9, '删除角色', NULL, 6, '/role/*', 'delete', 1, 1);
 INSERT INTO `resource` VALUES (10, '编辑角色', NULL, 5, '/role', 'put', 1, 1);
@@ -10488,6 +10530,12 @@ INSERT INTO `resource` VALUES (23, '编辑商品', NULL, 5, '/commodity', 'put',
 INSERT INTO `resource` VALUES (24, '添加商品分类', NULL, 2, '/category', 'post', 6, 1);
 INSERT INTO `resource` VALUES (25, '编辑商品分类', NULL, 3, '/category', 'put', 6, 1);
 INSERT INTO `resource` VALUES (26, '删除商品分类', NULL, 4, '/category/*', 'delete', 6, 1);
+INSERT INTO `resource` VALUES (27, '编辑订单', NULL, 2, '/order/editState', 'put', 7, 1);
+INSERT INTO `resource` VALUES (28, '删除订单', NULL, 3, '/order/*', 'delete', 7, 1);
+INSERT INTO `resource` VALUES (29, '买家管理', NULL, 8, '../buyerList/buyerList.html', '', 0, 0);
+INSERT INTO `resource` VALUES (30, '添加买家', NULL, 2, '/buyer', 'post', 29, 1);
+INSERT INTO `resource` VALUES (31, '编辑买家', NULL, 2, '/buyer', 'put', 29, 1);
+INSERT INTO `resource` VALUES (32, '删除买家', NULL, 2, '/buyer/*', 'delete', 29, 1);
 INSERT INTO `resource` VALUES (3907913782690816, '角色详情', NULL, NULL, '/role/*', 'get', 1, 1);
 
 -- ----------------------------
@@ -10510,7 +10558,7 @@ CREATE TABLE `role`  (
 -- ----------------------------
 INSERT INTO `role` VALUES (0, '超管', '超级管理员角色，拥有系统中所有的资源访问权限', 0, NULL);
 INSERT INTO `role` VALUES (1, '商家', '商家角色，只能编辑自己的信息', 1, NULL);
-INSERT INTO `role` VALUES (2, '一般管理员', NULL, 2, NULL);
+INSERT INTO `role` VALUES (2, '一般管理员', '赋权测试用', 2, NULL);
 
 -- ----------------------------
 -- Table structure for role_resource
@@ -10534,10 +10582,16 @@ INSERT INTO `role_resource` VALUES (0, 1);
 INSERT INTO `role_resource` VALUES (0, 2);
 INSERT INTO `role_resource` VALUES (0, 3);
 INSERT INTO `role_resource` VALUES (0, 4);
+INSERT INTO `role_resource` VALUES (1, 4);
 INSERT INTO `role_resource` VALUES (0, 5);
+INSERT INTO `role_resource` VALUES (1, 5);
 INSERT INTO `role_resource` VALUES (0, 6);
 INSERT INTO `role_resource` VALUES (0, 7);
+INSERT INTO `role_resource` VALUES (1, 7);
+INSERT INTO `role_resource` VALUES (0, 8);
 INSERT INTO `role_resource` VALUES (0, 9);
+INSERT INTO `role_resource` VALUES (0, 10);
+INSERT INTO `role_resource` VALUES (0, 11);
 INSERT INTO `role_resource` VALUES (0, 12);
 INSERT INTO `role_resource` VALUES (0, 13);
 INSERT INTO `role_resource` VALUES (0, 14);
@@ -10548,11 +10602,21 @@ INSERT INTO `role_resource` VALUES (0, 18);
 INSERT INTO `role_resource` VALUES (0, 19);
 INSERT INTO `role_resource` VALUES (0, 20);
 INSERT INTO `role_resource` VALUES (0, 21);
+INSERT INTO `role_resource` VALUES (1, 21);
 INSERT INTO `role_resource` VALUES (0, 22);
+INSERT INTO `role_resource` VALUES (1, 22);
 INSERT INTO `role_resource` VALUES (0, 23);
+INSERT INTO `role_resource` VALUES (1, 23);
 INSERT INTO `role_resource` VALUES (0, 24);
 INSERT INTO `role_resource` VALUES (0, 25);
 INSERT INTO `role_resource` VALUES (0, 26);
+INSERT INTO `role_resource` VALUES (0, 27);
+INSERT INTO `role_resource` VALUES (1, 27);
+INSERT INTO `role_resource` VALUES (0, 28);
+INSERT INTO `role_resource` VALUES (0, 29);
+INSERT INTO `role_resource` VALUES (0, 30);
+INSERT INTO `role_resource` VALUES (0, 31);
+INSERT INTO `role_resource` VALUES (0, 32);
 INSERT INTO `role_resource` VALUES (0, 3907913782690816);
 
 -- ----------------------------
@@ -10583,8 +10647,9 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (0, '2019-07-05 17:50:05', '2019-07-05 21:58:01', '管理员', '96e79218965eb72c92a549dd5a330112', 'admin');
-INSERT INTO `user` VALUES (1, '2019-07-05 17:50:06', '2019-07-05 18:34:10', 'admin1', '202cb962ac59075b964b07152d234b70', 'admin1');
+INSERT INTO `user` VALUES (0, '2019-07-05 17:50:05', '2019-07-09 00:19:00', '狗管理上线了', '96e79218965eb72c92a549dd5a330112', 'admin');
+INSERT INTO `user` VALUES (1, '2019-07-05 17:50:06', '2019-07-08 22:21:19', '狗管理下线了', '202cb962ac59075b964b07152d234b70', 'admin1');
+INSERT INTO `user` VALUES (6582603598103552, '2019-07-09 10:21:01', '2019-07-09 10:21:01', '狗商家上线了', '96e79218965eb72c92a549dd5a330112', 'shop1');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -10605,5 +10670,7 @@ CREATE TABLE `user_role`  (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES (0, 0);
+INSERT INTO `user_role` VALUES (1, 0);
+INSERT INTO `user_role` VALUES (6582603598103552, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

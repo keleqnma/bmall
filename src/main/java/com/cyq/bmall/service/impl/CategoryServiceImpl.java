@@ -82,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
         Long currUid = SessionUtil.getCurrUid();
 
         if (currUid != null) {
-            params.put("userId", currUid);// 自查自己有权限的商品分类
+            params.put("userId", currUid);//
         }
 
         List<Category> categoryList = categoryMapper.getCategoryList(params);

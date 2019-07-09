@@ -101,6 +101,14 @@ public class UserController {
         return userService.tables(userVO);
     }
 
+    @RequestMapping(value = "/adminTables", method = RequestMethod.POST)
+    public DataTable<User> adminTables(@RequestBody UserVO userVO) { return userService.adminTables(userVO);  }
+
+    @RequestMapping(value = "/shopTables", method = RequestMethod.POST)
+    public DataTable<User> shopTables(@RequestBody UserVO userVO) {
+        return userService.shopTables(userVO);
+    }
+
 
     /**
      * 用户详情

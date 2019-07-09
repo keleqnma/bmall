@@ -12,12 +12,12 @@ define(function (require, exports, module) {
 
         events: {
             "click .edit-btn": "handlerEdit",
-            "click .pwd-btn": "handlerPwd",
             "click .del-btn": "handlerDelete",
             "click .add-btn": "handlerAdd",
             "click .close-btn": "handlerClose",
-            "click .auth-btn": "handlerShow",
-            "click .refresh-btn": "handlerRefresh"
+            "click .refresh-btn": "handlerRefresh",
+            "click .sure-btn2": "handlerIdSearch",
+            "click .sure-btn1": "handlerNameSearch",
         },
         template: _.template($('#buttonTemplate').html()),
 
@@ -42,9 +42,9 @@ define(function (require, exports, module) {
                 "columns": [
                     {"data": "name"},
                     {"data": "description"},
-                    {"data": "createTime"},
-                    {"data": "shopId"},
-                    {"data": "categoryId"},
+                    {"data": "price"},
+                    {"data": "shopName"},
+                    {"data": "categoryName"},
                     {
                         render: function (data, type, row, meta) {
                             var str = "";
@@ -65,16 +65,41 @@ define(function (require, exports, module) {
             });
         },
 
+        handlerIdSearch: function () {
+           commodityId = $(".commodity-id").val();
+
+           if(commodityId == "" ){
+                utils.showTip("请填入商品Id信息");
+                return;
+            }
+
+           commodityId=parseInt($(".commodity-id").val());
+
+            window.location.href='../addCommodity/addCommodity.html?id='+ commodityId;
+        },
+
+        handlerNameSearch: function(){
+            var commodityName = $(".commodity-name").val();
+
+            if(commodityName == "" ){
+                utils.showTip("请填入商品名字");
+                return;
+            }
+
+
+        },
+
         handlerEdit: function (event) {
             addTab(event, true);
         },
         
         handlerDelete: function (event) {
+            var _this=this;
             var target = $(event.currentTarget);
-            resourceId = target.data("id");
+            commodityId = target.data("id");
+
             $(".alert-view .alert-txt", parent.document).text("确定要删除吗？");
             $(".alert-view", parent.document).show();
-
         },
 
         hideView: function () {
@@ -88,7 +113,7 @@ define(function (require, exports, module) {
 
         handlerSureDel: function () {
             var _this = this;
-            utils.getDelete("/commodity/" + resourceId, {}, function (res) {
+            utils.getDelete("/commodity/" + commodityId, {}, function (res) {
                 utils.showTip("删除成功");
                 setTimeout(function () {
                     commodityTable.ajax.reload(null, false);

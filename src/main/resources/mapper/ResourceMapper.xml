@@ -5,8 +5,7 @@
 
     <insert id="save" parameterType="com.cyq.bmall.model.Resource">
         INSERT INTO bmall.resource (ID, NAME, REMARK, SEQ, URL, method, PID, type)
-        VALUES (#{id}, #{name}, #{remark},
-                #{seq}, #{url}, #{method}, #{pid}, #{type})
+        VALUES (#{id}, #{name}, #{remark},#{seq}, #{url}, #{method}, #{pid}, #{type})
     </insert>
 
     <update id="update" parameterType="com.cyq.bmall.model.Resource">

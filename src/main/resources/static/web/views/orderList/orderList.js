@@ -43,22 +43,19 @@ define(function (require, exports, module) {
                     {"data": "userId"},
                     {"data": "issueTime"},
                     {"data": "price"},
-                    {"data": "state"},
+                    {"data": "state" },
                     {
                         render: function (data, type, row, meta) {
                             var str = "";
 
-                            if ($.inArray("/order-put", resourceData) > -1) {
-                                str += "<button  data-text='编辑订单'  data-id='addOrder' data-link='../addOrder/addOrder.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'><i class='fa fa-pencil' aria-hidden='true'></i> 编辑</button>"
-                            }
-
-                            if ($.inArray("/order/editOrder-post", resourceData) > -1) {
-                                str += "<button data-text='修改密码'  data-id='editPwd' data-link='../editOrder/editOrder.html?id=" + row.id + "' class='btn btn-primary pwd-btn btn-xs margin-right-5'><i class='fa fa-key' aria-hidden='true'></i> 修改密码</button>"
+                            if ($.inArray("/order/editState-put", resourceData) > -1) {
+                                str += "<button  data-text='编辑订单'  data-id='addOrder' data-link='../editOrder/editOrder.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'><i class='fa fa-pencil' aria-hidden='true'></i> 编辑</button>"
                             }
 
                             if ($.inArray("/order/*-delete", resourceData) > -1) {
                                 str += "<button data-id='" + row.id + "' class='btn btn-danger del-btn btn-xs'><i class='fa fa-trash-o' aria-hidden='true'></i> 删除</button>"
                             }
+
                             return str;
                         }
 
@@ -74,7 +71,7 @@ define(function (require, exports, module) {
 
         handlerDelete: function (event) {
             var target = $(event.currentTarget);
-            resourceId = target.data("id");
+            orderId = target.data("id");
             $(".alert-view .alert-txt", parent.document).text("确定要删除吗？");
             $(".alert-view", parent.document).show();
 
@@ -91,7 +88,7 @@ define(function (require, exports, module) {
 
         handlerSureDel: function () {
             var _this = this;
-            utils.getDelete("/order/" + resourceId, {}, function (res) {
+            utils.getDelete("/order/" + orderId, {}, function (res) {
                 utils.showTip("删除成功");
                 setTimeout(function () {
                     orderTable.ajax.reload(null, false);
@@ -165,8 +162,6 @@ define(function (require, exports, module) {
             utils.getJSON("/order/" + orderId, {}, function (res) {
                 _this.initEdit(res);
             })
-
-
         },
 
         initEdit: function (res) {

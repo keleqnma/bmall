@@ -18,6 +18,7 @@
     </div>
 </div>
 <div id="tips"></div>
+
 <div class="page">
     <div id="toolBox">
     </div>
@@ -30,13 +31,11 @@
     <button class="add-btn btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> 添加</button>
     <%}%>
 </script>
+
 <script type="text/template" id="treeTemplate">
     <thead>
     <tr>
         <th>商品分类名称</th>
-        <th>URL</th>
-        <th>METHOD</th>
-        <th>类型</th>
         <th>排序</th>
         <th>操作</th>
     </tr>
@@ -46,15 +45,13 @@
     <tr data-tt-id="<%=list[i].id%>"
     <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
     <td><%=list[i].name%></td>
-    <td><%=list[i].url%></td>
-    <td><%=list[i].method%></td>
-    <td><%=list[i].type=="1"?"功能":"菜单"%></td>
+    <td><%=list[i].seq%></td>
     <td><%=list[i].sort%></td>
     <td>
-        <%if($.inArray("/category-put",categoryData) > -1){%><a data-id="<%=list[i].id%>"
+        <%if($.inArray("/category-put",resourceData) > -1){%><a data-id="<%=list[i].id%>"
                                                                 class="edit-btn btn btn-xs btn-primary pointer"><i
             class='fa fa-pencil' aria-hidden='true'></i> 编辑</a><%}%>
-        <%if($.inArray("/category/*-delete",categoryData) > -1){%><a data-id="<%=list[i].id%>"
+        <%if($.inArray("/category/*-delete",resourceData) > -1){%><a data-id="<%=list[i].id%>"
                                                                      class="del-btn btn btn-xs btn-danger pointer"><i
             class='fa fa-trash-o' aria-hidden='true'></i> 删除</a><%}%>
     </td>

@@ -16,7 +16,7 @@ public class Commodity implements java.io.Serializable{
     private Date modifyTime;
     private double price;
     private String description;
-    private String categoryId;
-    private String shopId;
+    private String categoryName;
+    private String shopName;
     private int exist;
 }

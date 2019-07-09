@@ -20,4 +20,7 @@ public class AppConst {
     public static final Integer ORDER_TYPE_DELIVERY=1;//送货中
     public static final Integer ORDER_TYPE_FINISHED=2;//已完成
     public static final Integer ORDER_TYPE_CANCELLED=3;//已取消
+
+    public static final Integer USER_TYPE_ADMIN=0;//管理员
+    public static final Integer USER_TYPE_SHOP=1;//卖家
 }

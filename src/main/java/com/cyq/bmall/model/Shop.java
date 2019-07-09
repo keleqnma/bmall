@@ -16,6 +16,4 @@ public class Shop extends User{
     private List<Long> commodityIds;
     @TableField(exist = false)
     private List<String> commodityNames;
-
-
 }

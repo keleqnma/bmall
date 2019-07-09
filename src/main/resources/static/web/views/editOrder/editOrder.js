@@ -17,22 +17,17 @@ define(function (require, exports, module) {
         },
 
         handlerSure: function () {
-            var password = $(".new-pwd").val();
+            var state = $(".type-sel").val();
             var postData = {
-                "password": password
+                "state": state,
             }
-            if (password == "") {
-                utils.showTip("请输入新密码");
-                return;
-            }
-
             this.handlerEdit(postData);
         },
 
         handlerEdit: function (postData) {
             postData["id"] = id;
             var _this = this;
-            utils.getPUT("/order/editPwd", postData, function (res) {
+            utils.getPUT("/order/editState", postData, function (res) {
                 utils.showTip("修改成功");
 
                 setTimeout(function () {
@@ -52,8 +47,7 @@ define(function (require, exports, module) {
         },
 
         dealData: function (res) {
-            $(".name").val(res.name);
-            $(".order-name").val(res.ordername);
+            $(".state").val(res.state);
 
         },
 

@@ -4,9 +4,9 @@
 
 
     <insert id="save" parameterType="com.cyq.bmall.model.Category">
-        INSERT INTO bmall.category (ID, NAME, REMARK, SEQ, PID, type)
+        INSERT INTO bmall.category (ID, NAME, REMARK, SEQ, PID)
         VALUES (#{id}, #{name}, #{remark},
-                #{seq}, #{pid}, #{type})
+                #{seq}, #{pid})
     </insert>
     <update id="update" parameterType="com.cyq.bmall.model.Category">
         UPDATE bmall.category
@@ -19,9 +19,6 @@
             </if>
             <if test="seq != null">
                 seq = #{seq},
-            </if>
-            <if test="type != null">
-                type = #{type},
             </if>
             pid = #{pid},
         </set>
@@ -53,4 +50,11 @@
         WHERE c.ID = #{id}
     </select>
 
+    <select id="getCategoryCommodities" resultType="com.cyq.bmall.model.Category">
+        SELECT c.*
+        FROM
+            bmall.category c INNER JOIN bmall.category_commodity cc ON cc.category_id=c.id
+            INNER JOIN bmall.commodity co ON cc.commodity_id=c.id
+        WHERE co.ID= #{commodityId}
+    </select>
 </mapper>

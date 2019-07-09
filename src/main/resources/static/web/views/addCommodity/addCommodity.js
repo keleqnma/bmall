@@ -21,11 +21,13 @@ define(function (require, exports, module) {
             var commodityName = $(".commodity-name").val();
             var price = $(".price").val();
             var description = $(".description").val();
+
             var postData = {
                 "name": commodityName,
                 "price":price,
                 "description":description,
             }
+
             if (commodityName == "") {
                 utils.showTip("请输入商品名");
                 return;

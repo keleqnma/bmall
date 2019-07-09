@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyq.bmall.mapper.CommodityMapper">
 
+    <resultMap id="BaseResultMap" type="com.cyq.bmall.model.Order">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+    </resultMap>
 
     <insert id="save" parameterType="com.cyq.bmall.model.Commodity">
         INSERT INTO bmall.commodity (ID,NAME,price,description)
@@ -20,13 +26,6 @@
             <if test="description != null">
                 description = #{description},
             </if>
-            <if test="categoryId != null">
-                categoryId = #{categoryId},
-            </if>
-            <if test="shopId != null">
-                shopId = #{shopId},
-            </if>
-            modify_time = now(),
         </set>
 
         WHERE ID = #{id}
@@ -39,18 +38,25 @@
     </delete>
 
     <select id="getCommodityList" resultType="com.cyq.bmall.model.Commodity">
-
         SELECT c.*
         FROM bmall.commodity c
+
+        <where>
+            <if test="userId != null">
+                and exists(
+                select 1
+                from bmall.shop_commodity sc INNER JOIN bmall.user u ON sc.shop_id = u.ID
+                WHERE u.ID = #{userId} )
+            </if>
+        </where>
+
         order by c.id
     </select>
     
     <select id="getById" resultType="com.cyq.bmall.model.Commodity">
-        SELECT
-            c.*,
-        FROM
-            bmall.commodity c
-        WHERE c.ID = #{id}
+        SELECT *
+        FROM bmall.commodity
+        WHERE id = #{id}
     </select>
 
     <select id="getShopCommodityIds" resultType="java.lang.Long">
@@ -60,6 +66,12 @@
     </select>
 
     <select id="getCategoryCommodityIds" resultType="java.lang.Long">
+        SELECT c.id
+        FROM bmall.commodity c INNER JOIN bmall.category_commodity cc ON c.ID = cc.COMMODITY_ID
+        WHERE cc.CATEGORY_ID = #{categoryId}
+    </select>
+
+    <select id="bestSellingCommodity" resultType="com.cyq.bmall.model.Commodity" parameterType="com.cyq.bmall.model.Commodity">
         SELECT c.id
         FROM bmall.commodity c INNER JOIN bmall.category_commodity cc ON c.ID = cc.COMMODITY_ID
         WHERE cc.CATEGORY_ID = #{categoryId}

@@ -143,4 +143,34 @@ public class UserServiceImpl implements UserService {
         return tables;
     }
 
+    @Override
+    public DataTable<User> shopTables(UserVO userVO) {
+        PageHelper.offsetPage(userVO.getStart(), userVO.getLength());
+
+        Map param=new HashMap<>();
+        param.put("type",AppConst.USER_TYPE_SHOP);
+        List<User> users = userMapper.getRoleUsers(param);
+        DataTable<User> tables = new DataTable<>();
+        tables.setRecordsTotal(((Page) users).getTotal());
+        tables.setRecordsFiltered(tables.getRecordsTotal());
+        tables.setDraw(userVO.getDraw());
+        tables.setData(users);
+        return tables;
+    }
+
+    @Override
+    public DataTable<User> adminTables(UserVO userVO) {
+        PageHelper.offsetPage(userVO.getStart(), userVO.getLength());
+        Map param=new HashMap<>();
+        param.put("type",AppConst.USER_TYPE_ADMIN);
+        List<User> users = userMapper.getRoleUsers(param);
+
+        DataTable<User> tables = new DataTable<>();
+        tables.setRecordsTotal(((Page) users).getTotal());
+        tables.setRecordsFiltered(tables.getRecordsTotal());
+        tables.setDraw(userVO.getDraw());
+        tables.setData(users);
+        return tables;
+    }
+
 }

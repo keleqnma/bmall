@@ -34,7 +34,7 @@ define(function (require, exports, module) {
         },
 
         handlerSure: function () {
-            var type = $(".state-sel").val();
+            var type = $(".type-sel").val();
             var name = $(".name").val();
             var url = $(".url").val();
             var remark = $(".remark").val();
@@ -107,7 +107,7 @@ define(function (require, exports, module) {
 
         dealData: function (res) {
             var type = res.type;
-            $(".state-sel").val(type);
+            $(".type-sel").val(type);
             $(".name").val(res.name);
             $(".seq").val(res.seq);
 

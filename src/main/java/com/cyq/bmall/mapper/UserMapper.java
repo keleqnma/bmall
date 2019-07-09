@@ -89,5 +89,6 @@ public interface UserMapper extends BaseMapper<User> {
      */
     void saveRoles(@Param("id") Long id, @Param("roleIds") List<Long> roleIds);
 
-
+    //返回某种特定身份的user 比如商家，比如管理员
+    List<User> getRoleUsers(Map<String, Object> params);
 }
