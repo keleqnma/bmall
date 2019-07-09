@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyq.bmall.mapper.BuyerMapper">
+
+    <resultMap id="BaseResultMap" type="com.cyq.bmall.model.Order">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.cyq.bmall.model.Buyer">
+        INSERT INTO bmall.buyer (ID,NAME)
+        VALUES (#{id}, #{name})
+    </insert>
+
+    <update id="update" parameterType="com.cyq.bmall.model.Buyer">
+        UPDATE bmall.buyer
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+        </set>
+
+        WHERE ID = #{id}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM bmall.buyer
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="getBuyerList" resultType="com.cyq.bmall.model.Buyer">
+        SELECT c.*
+        FROM bmall.buyer c
+        order by c.id
+    </select>
+    
+    <select id="getById" resultType="com.cyq.bmall.model.Buyer">
+        SELECT *
+        FROM bmall.buyer
+        WHERE id = #{id}
+    </select>
+</mapper>

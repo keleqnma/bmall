@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyq.bmall.mapper.OrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.cyq.bmall.model.Order">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="issueTime" property="issueTime" jdbcType="TIMESTAMP"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="update" parameterType="com.cyq.bmall.model.Order">
+        UPDATE bmall.order
+        SET state = #{state}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM bmall.order
+        WHERE ID = #{id}
+    </delete>
+
+    <!--查询订单-->
+    <select id="findOrder" parameterType="map" resultType="com.cyq.bmall.model.Order">
+        SELECT * FROM bmall.order
+        <where>
+            <if test="shopId != null">
+                and exists(
+                select 1
+                from bmall.order_commodity oc INNER JOIN bmall.commodity c ON oc.COMMODITY_ID = c.ID
+                INNER JOIN shop_commodity sc ON sc.COMMODITY_ID = c.ID
+                INNER JOIN bmall.user s ON sc.SHOP_ID = s.ID
+                WHERE s.ID = #{shopId} )
+            </if>
+        </where>
+
+    </select>
+
+    <!--订单的商品id-->
+    <select id="getOrderCommodityIds" resultType="java.lang.Long">
+        SELECT commodity_id
+        FROM bmall.order_commodity
+        WHERE order_id = #{id}
+    </select>
+
+    <!-- 订单的商品名称-->
+    <select id="getOrderCommodityNames" resultType="java.lang.String">
+        SELECT c.id
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.id = oc.commodity_id
+        WHERE oc.order_id = #{id}
+    </select>
+
+    <select id="getById" resultType="com.cyq.bmall.model.Order">
+        SELECT *
+        FROM bmall.order
+        WHERE id = #{id}
+    </select>
+
+    <select id="totalAmountOrders" resultType="java.lang.Long">
+        select IFNULL (sum(price),0)
+        from `order` where `issueTime`
+        between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="totalQuantityOrders" resultType="java.lang.Long">
+        select IFNULL (count(*),0)
+        from `order` where `issueTime`
+        between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </select>
+</mapper>
