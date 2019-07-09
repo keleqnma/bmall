@@ -4,9 +4,8 @@
 
 
     <insert id="save" parameterType="com.cyq.bmall.model.Category">
-        INSERT INTO bmall.category (ID, NAME, REMARK, SEQ, PID)
-        VALUES (#{id}, #{name}, #{remark},
-                #{seq}, #{pid})
+        INSERT INTO bmall.category (ID, NAME, PID)
+        VALUES (#{id}, #{name}, #{pid})
     </insert>
     <update id="update" parameterType="com.cyq.bmall.model.Category">
         UPDATE bmall.category
@@ -36,7 +35,6 @@
 
         SELECT c.*
         FROM bmall.category c
-        order by c.seq
     </select>
 
     <select id="getById" resultType="com.cyq.bmall.model.Category">
