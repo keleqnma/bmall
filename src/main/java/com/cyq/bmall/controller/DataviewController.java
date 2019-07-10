@@ -1,6 +1,9 @@
 package com.cyq.bmall.controller;
 
 import com.cyq.bmall.mapper.OrderMapper;
+import com.cyq.bmall.mapper.UserMapper;
+import com.cyq.bmall.util.AppConst;
+import com.cyq.bmall.util.SessionUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class DataviewController {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Data
     private class OrderPriceResp {
         ArrayList<String> date = new ArrayList<>();
@@ -40,11 +46,15 @@ public class DataviewController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public OrderPriceResp getOrderById(@RequestParam String key, @RequestParam int step,@RequestParam(defaultValue = "0")  long type,@RequestParam(defaultValue = "") String startRequest) {
+    public OrderPriceResp getOrderById(@RequestParam String key, @RequestParam int step,
+                                       @RequestParam(defaultValue = "0")  long type,
+                                       @RequestParam(defaultValue = "") String startRequest,
+                                       @RequestParam(defaultValue = "") String shopperId
+
+    ) {
         Time start,end;
 
         if(startRequest.isEmpty()){
-            System.out.println("hudfgjhkdfghkdfghkjgdfkj");
             String startStr = "2016.1.1";
             String endStr = "2018.12.31";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -53,12 +63,10 @@ public class DataviewController {
             pos = new ParsePosition(0);
             end = new Time(sdf.parse(endStr, pos).getTime());
         }else{
-            System.out.println(startRequest);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
             ParsePosition pos = new ParsePosition(0);
             start = new Time(sdf.parse(startRequest, pos).getTime());
             end = new Time(start.getTime()+86400000);
-            System.out.println( new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(end));
         }
 
         OrderPriceResp orderPriceResp = new OrderPriceResp();
@@ -78,6 +86,15 @@ public class DataviewController {
             Date j = new Date(nextIter.getTime().getTime());
             params.put("dateBegin", i);
             params.put("dateEnd", j);
+            Long currUid = SessionUtil.getCurrUid();
+            if(currUid!=null) {
+                boolean isAdmin = userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue());
+                if (!isAdmin) {//非管理员
+                    params.put("userId", currUid);// 查自己有权限的商品
+                } else if ( !shopperId.isEmpty()) {//管理员
+                    params.put("userId", shopperId);
+                }
+            }
 
             long num;
             switch (key) {
@@ -99,8 +116,6 @@ public class DataviewController {
             if(startRequest.isEmpty()) {
                 SimpleDateFormat outputSdf = new SimpleDateFormat("yyyy/MM/dd");
                 orderPriceResp.add(outputSdf.format(iter.getTime()), num);
-                System.out.println(outputSdf.format(iter.getTime()));
-                System.out.println(num);
             }else{
                 SimpleDateFormat outputSdf = new SimpleDateFormat("HH:mm:ss");
                 orderPriceResp.add(outputSdf.format(iter.getTime()), num);

@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.apache.velocity.runtime.parser.node.MathUtils.isInteger;
+
 @Service("orderService")
 @Transactional
 public class OrderServiceImpl implements OrderService {
@@ -86,6 +88,54 @@ public class OrderServiceImpl implements OrderService {
     public DataTable<Order> tables(OrderVO orderVO) {
         Map<String, Object> params = new HashMap<>();
         Long currUid = SessionUtil.getCurrUid();
+        if (currUid != null && !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue() ) ) {
+            params.put("shopId", currUid);// 查自己有权限的订单
+        }
+
+        PageHelper.offsetPage(orderVO.getStart(), orderVO.getLength());
+        List<Order> orders = orderMapper.findOrder(params);
+
+        for(Order order:orders){
+            int nowstate=0 ;
+
+            try {
+                nowstate = Integer.parseInt(order.getState());
+            }catch (Exception e){
+
+            }
+            int uw=0;
+            switch (nowstate){
+                case 0:
+                    order.setState("已下单");
+                    break;
+                case 1:
+                    order.setState("已发货");
+                    break;
+                case 2:
+                    order.setState("已完成");
+                    break;
+                case 3:
+                    order.setState("已取消");
+                    break;
+
+            }
+        }
+
+        DataTable<Order> tables = new DataTable<>();
+        tables.setRecordsTotal(((Page) orders).getTotal());
+        tables.setRecordsFiltered(tables.getRecordsTotal());
+        tables.setDraw(orderVO.getDraw());
+        tables.setData(orders);
+        return tables;
+    }
+
+    @Override
+    public DataTable<Order> categoryTables(OrderVO orderVO,Long categoryId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("categoryId",categoryId);
+
+        Long currUid = SessionUtil.getCurrUid();
+        params.put("shopId", currUid);
         if (currUid != null && !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue() ) ) {
             params.put("shopId", currUid);// 查自己有权限的订单
         }

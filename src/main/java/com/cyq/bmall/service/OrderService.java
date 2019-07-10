@@ -55,4 +55,6 @@ public interface OrderService {
     List<String> getOrderCommodityNames(Long id);
 
     DataTable<Order> tables(OrderVO orderVO);
+
+    DataTable<Order> categoryTables(OrderVO orderVO,Long categoryId);
 }

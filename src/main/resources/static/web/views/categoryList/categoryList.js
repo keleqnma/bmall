@@ -9,7 +9,8 @@ define(function (require, exports, module) {
         events: {
             "click .add-btn": "handlerAdd",
             "click .del-btn": "handlerDelete",
-            "click .edit-btn": "handlerEdit"
+            "click .edit-btn": "handlerEdit",
+            "click .get-btn": "handlerInfo"
         },
 
         template: _.template($('#treeTemplate').html()),
@@ -66,7 +67,7 @@ define(function (require, exports, module) {
                 utils.showTip("删除成功");
                 $(window).trigger("changeMenu");
                 setTimeout(function () {
-                    window.location.href = "../category/category.html";
+                    window.location.href = "../categoryList/categoryList.html";
                 }, 1000);
             })
         },
@@ -76,6 +77,12 @@ define(function (require, exports, module) {
             var id = target.data("id");
             window.location.href = "../addCategory/addCategory.html?id=" + id;
 
+        },
+
+        handlerInfo:function (event) {
+            var target = $(event.currentTarget);
+            var id = target.data("id");
+            window.location.href = "../categoryOrder/categoryOrder.html?id=" + id;
         }
 
 

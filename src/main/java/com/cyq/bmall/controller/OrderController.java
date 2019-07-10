@@ -41,6 +41,10 @@ public class OrderController {
         return orderService.tables(orderVO);
     }
 
+    @RequestMapping(value = "/tables/{categoryId}", method = RequestMethod.POST)
+    public DataTable<Order> categoryTables(@RequestBody OrderVO orderVO,@PathVariable("categoryId") Long categoryId) {
+        return orderService.categoryTables(orderVO,categoryId);
+    }
 
     /**
      * 订单详情

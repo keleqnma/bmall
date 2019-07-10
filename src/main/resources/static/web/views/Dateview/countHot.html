@@ -6,14 +6,17 @@
     <link rel="stylesheet" type="text/css" href="../../common/css/common.css">
     <link rel="stylesheet" type="text/css" href="./home.css">
 </head>
+
 <body>
 <div class="line">
+    <span class="line-name">开始时间:</span>
     <input type="text" id="date" name="date" class="user-name" placeholder="开始时间">
 </div>
 
 <div class="text-center">
     <button class="login-btn" onclick="but()">确认</button>
 </div>
+
 <div class="loading" id="loading">
     <div class="spinner">
         <div class="double-bounce1"></div>
@@ -43,6 +46,7 @@
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
+    myChart.showLoading();
     option = null;
     var date;
     var data;
@@ -58,6 +62,7 @@
             success: function (result) {
                 date = result["date"];
                 data = result["data"];
+                myChart.hideLoading();
                 option = {
                     tooltip: {
                         trigger: 'axis',

@@ -23,8 +23,9 @@
     </delete>
 
     <!--查询订单-->
-    <select id="findOrder" parameterType="map" resultType="com.cyq.bmall.model.Order">
-        SELECT * FROM bmall.order
+    <select id="findOrder" resultType="com.cyq.bmall.model.Order">
+        SELECT o.*
+        FROM bmall.order o
         <where>
             <if test="shopId != null">
                 and exists(
@@ -32,7 +33,15 @@
                 from bmall.order_commodity oc INNER JOIN bmall.commodity c ON oc.COMMODITY_ID = c.ID
                 INNER JOIN shop_commodity sc ON sc.COMMODITY_ID = c.ID
                 INNER JOIN bmall.user s ON sc.SHOP_ID = s.ID
-                WHERE s.ID = #{shopId} )
+                WHERE s.ID = #{shopId} AND oc.order_id = o.id)
+            </if>
+
+            <if test="categoryId != null">
+                and exists(
+                select 1
+                from bmall.order_commodity oc INNER JOIN bmall.commodity c ON oc.COMMODITY_ID = c.ID
+                INNER JOIN category_commodity cc ON cc.COMMODITY_ID = c.ID
+                WHERE cc.CATEGORY_ID = #{categoryId} AND oc.order_id = o.id )
             </if>
         </where>
 
@@ -60,13 +69,23 @@
 
     <select id="totalAmountOrders" resultType="java.lang.Long">
         select IFNULL (sum(price),0)
-        from `order` where `issueTime`
-        between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        from `order` o LEFT JOIN bmall.order_commodity oc ON oc.order_id = o.id
+        where `issueTime` between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        <choose>
+            <when test="userId != null">
+                and oc.commodity_id = #{userId}
+            </when>
+        </choose>
     </select>
 
     <select id="totalQuantityOrders" resultType="java.lang.Long">
         select IFNULL (count(*),0)
-        from `order` where `issueTime`
-        between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        from `order` o LEFT JOIN bmall.order_commodity oc ON oc.order_id = o.id
+        where `issueTime` between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        <choose>
+            <when test="userId != null">
+                and oc.commodity_id = #{userId}
+            </when>
+        </choose>
     </select>
 </mapper>

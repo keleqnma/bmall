@@ -44,9 +44,8 @@
         <where>
             <if test="userId != null">
                 and exists(
-                select 1
-                from bmall.shop_commodity sc INNER JOIN bmall.user u ON sc.shop_id = u.ID
-                WHERE u.ID = #{userId} )
+                select sc.commodity_id from bmall.shop_commodity sc INNER JOIN bmall.user u ON sc.shop_id = u.ID
+                WHERE u.ID = #{userId} AND sc.commodity_id = c.id)
             </if>
         </where>
 
