@@ -1,22 +1,19 @@
 package com.cyq.bmall.controller;
 
+import com.cyq.bmall.mapper.BuyerMapper;
+import com.cyq.bmall.mapper.CommodityMapper;
 import com.cyq.bmall.mapper.OrderMapper;
 import com.cyq.bmall.mapper.UserMapper;
-import com.cyq.bmall.util.AppConst;
-import com.cyq.bmall.util.SessionUtil;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.sql.Time;
+import java.util.*;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/dataview")
@@ -25,6 +22,12 @@ public class DataviewController {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private CommodityMapper commodityMapper;
+
+    @Autowired
+    private BuyerMapper buyerMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -45,16 +48,37 @@ public class DataviewController {
         }
     }
 
+    @Data
+    private class CommodityResp {
+        int value;
+        String name;
+
+        public CommodityResp(int value, String name) {
+            this.setName(name);
+            this.setValue(value);
+        }
+    }
+
+    @Data
+    private class UserResp {
+        float value;
+        String name;
+
+        public UserResp(float value, String name) {
+            this.setName(name);
+            this.setValue(value);
+        }
+    }
+
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public OrderPriceResp getOrderById(@RequestParam String key, @RequestParam int step,
-                                       @RequestParam(defaultValue = "0")  long type,
-                                       @RequestParam(defaultValue = "") String startRequest,
-                                       @RequestParam(defaultValue = "") String shopperId
+    public OrderPriceResp getOrderById(@RequestParam String key,
+                                       @RequestParam int step,
+                                       @RequestParam(defaultValue = "0") long type,
+                                       @RequestParam(defaultValue = "") String startRequest) {
+        Time start, end;
 
-    ) {
-        Time start,end;
-
-        if(startRequest.isEmpty()){
+        if (startRequest.isEmpty()) {
+            System.out.println("hudfgjhkdfghkdfghkjgdfkj");
             String startStr = "2016.1.1";
             String endStr = "2018.12.31";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -62,11 +86,13 @@ public class DataviewController {
             start = new Time(sdf.parse(startStr, pos).getTime());
             pos = new ParsePosition(0);
             end = new Time(sdf.parse(endStr, pos).getTime());
-        }else{
+        } else {
+            System.out.println(startRequest);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
             ParsePosition pos = new ParsePosition(0);
             start = new Time(sdf.parse(startRequest, pos).getTime());
-            end = new Time(start.getTime()+86400000);
+            end = new Time(start.getTime() + 86400000);
+            System.out.println(new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(end));
         }
 
         OrderPriceResp orderPriceResp = new OrderPriceResp();
@@ -76,25 +102,16 @@ public class DataviewController {
         for (iter.setTime(start), nextIter.setTime(start); iter.getTime().before(end); iter.setTime(nextIter.getTime())) {
 
 
-            if(startRequest.isEmpty()) {
+            if (startRequest.isEmpty()) {
                 nextIter.add(Calendar.DATE, step);
-            }else{
-                nextIter.add(Calendar.HOUR,step);
+            } else {
+                nextIter.add(Calendar.HOUR, step);
             }
 
             Date i = new Date(iter.getTime().getTime());
             Date j = new Date(nextIter.getTime().getTime());
             params.put("dateBegin", i);
             params.put("dateEnd", j);
-            Long currUid = SessionUtil.getCurrUid();
-            if(currUid!=null) {
-                boolean isAdmin = userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue());
-                if (!isAdmin) {//非管理员
-                    params.put("userId", currUid);// 查自己有权限的商品
-                } else if ( !shopperId.isEmpty()) {//管理员
-                    params.put("userId", shopperId);
-                }
-            }
 
             long num;
             switch (key) {
@@ -113,17 +130,114 @@ public class DataviewController {
                 default:
                     num = 0;
             }
-            if(startRequest.isEmpty()) {
+            if (startRequest.isEmpty()) {
                 SimpleDateFormat outputSdf = new SimpleDateFormat("yyyy/MM/dd");
                 orderPriceResp.add(outputSdf.format(iter.getTime()), num);
-            }else{
+                System.out.println(outputSdf.format(iter.getTime()));
+                System.out.println(num);
+            } else {
                 SimpleDateFormat outputSdf = new SimpleDateFormat("HH:mm:ss");
                 orderPriceResp.add(outputSdf.format(iter.getTime()), num);
             }
         }
-
-
         return orderPriceResp;
     }
 
+    @RequestMapping(value = "/commodity", method = RequestMethod.GET)
+    public ArrayList<CommodityResp> getTopCommodities(@RequestParam String key,
+                                                      @RequestParam(defaultValue = "") String startRequest, @RequestParam(defaultValue = "") String endRequest) {
+        Date start, end;
+
+        System.out.println(startRequest);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        ParsePosition pos = new ParsePosition(0);
+
+        start = new Date(sdf.parse(startRequest, pos).getTime());
+
+        pos = new ParsePosition(0);
+        end = new Date(sdf.parse(endRequest, pos).getTime());
+        System.out.println(new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(end));
+
+        ArrayList<CommodityResp> commodityResps = new ArrayList<CommodityResp>();
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("dateBegin", start);
+        params.put("dateEnd", end);
+
+        List<Integer> values = null;
+        List<Float> realvalues;
+        List<String> names;
+
+        switch (key) {
+            case "seller":
+                names = commodityMapper.bestSellingCommodityNames(params);
+                values = commodityMapper.bestSellingCommodityValues(params);
+                break;
+            case "evaluation":
+                names = commodityMapper.bestEvaluationQuantityCommodityNames(params);
+                values = commodityMapper.bestEvaluationQuantityCommodityValues(params);
+                break;
+            case "rating":
+                names = commodityMapper.bestEvaluationRatingCommodityNames(params);
+                values = commodityMapper.bestEvaluationRatingCommodityValues(params);
+                break;
+            case "user":
+                names = buyerMapper.bestBuyerNames(params);
+                realvalues = buyerMapper.bestBuyerValues(params);
+                break;
+            default:
+                names = new ArrayList<String>();
+                values = new ArrayList<Integer>();
+        }
+        int size = names.size();
+        for (int i = 0; i < size; i++) {
+            commodityResps.add(new CommodityResp(values.get(i), names.get(i)));
+        }
+        return commodityResps;
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public ArrayList<UserResp> getTopUsers(@RequestParam String key,
+                                                      @RequestParam(defaultValue = "") String startRequest, @RequestParam(defaultValue = "") String endRequest) {
+        Date start, end;
+
+        System.out.println(startRequest);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        ParsePosition pos = new ParsePosition(0);
+
+        start = new Date(sdf.parse(startRequest, pos).getTime());
+
+        pos = new ParsePosition(0);
+        end = new Date(sdf.parse(endRequest, pos).getTime());
+        System.out.println(new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(end));
+
+        ArrayList<UserResp> userResps = new ArrayList<UserResp>();
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("dateBegin", start);
+        params.put("dateEnd", end);
+
+        List<Float> realvalues;
+        List<String> names;
+
+        switch (key) {
+           
+            case "buyer":
+                names = buyerMapper.bestBuyerNames(params);
+                realvalues = buyerMapper.bestBuyerValues(params);
+                break;
+            case "shop":
+                names = userMapper.bestShopNames(params);
+                realvalues = userMapper.bestShopValues(params);
+                break;
+            default:
+                names = new ArrayList<String>();
+                realvalues = new ArrayList<Float>();
+        }
+        int size = names.size();
+        for (int i = 0; i < size; i++) {
+           userResps.add(new UserResp(realvalues.get(i), names.get(i)));
+        }
+        return userResps;
+    }
 }

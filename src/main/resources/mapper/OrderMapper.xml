@@ -27,21 +27,20 @@
         SELECT o.*
         FROM bmall.order o
         <where>
-            <if test="shopId != null">
-                and exists(
-                select 1
-                from bmall.order_commodity oc INNER JOIN bmall.commodity c ON oc.COMMODITY_ID = c.ID
-                INNER JOIN shop_commodity sc ON sc.COMMODITY_ID = c.ID
-                INNER JOIN bmall.user s ON sc.SHOP_ID = s.ID
-                WHERE s.ID = #{shopId} AND oc.order_id = o.id)
-            </if>
-
             <if test="categoryId != null">
                 and exists(
                 select 1
-                from bmall.order_commodity oc INNER JOIN bmall.commodity c ON oc.COMMODITY_ID = c.ID
-                INNER JOIN category_commodity cc ON cc.COMMODITY_ID = c.ID
-                WHERE cc.CATEGORY_ID = #{categoryId} AND oc.order_id = o.id )
+                from bmall.order_commodity oc
+                INNER JOIN category_commodity cc ON cc.COMMODITY_ID = oc.COMMODITY_ID
+                WHERE cc.CATEGORY_ID = #{categoryId})
+            </if>
+            <if test="shopId != null">
+                and exists(
+                select 1
+                from bmall.order_commodity oc
+                INNER JOIN shop_commodity sc ON sc.COMMODITY_ID = oc.COMMODITY_ID
+                INNER JOIN bmall.user s ON sc.SHOP_ID = s.ID
+                WHERE s.ID = #{shopId} AND oc.order_id = o.id )
             </if>
         </where>
 

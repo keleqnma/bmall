@@ -40,4 +40,22 @@
         FROM bmall.buyer
         WHERE id = #{id}
     </select>
+
+    <select id="bestBuyerNames" resultType="java.lang.String">
+        SELECT b.name
+        FROM bmall.buyer b INNER JOIN bmall.order o ON o.userId=b.id
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY b.id
+        ORDER BY SUM(price) DESC
+        LIMIT 10
+    </select>
+
+    <select id="bestBuyerValues" resultType="java.lang.Float">
+        SELECT SUM(price)
+        FROM bmall.buyer b INNER JOIN bmall.order o ON o.userId=b.id
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY b.id
+        ORDER BY SUM(price) DESC
+        LIMIT 10
+    </select>
 </mapper>

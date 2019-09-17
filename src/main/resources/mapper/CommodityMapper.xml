@@ -2,13 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyq.bmall.mapper.CommodityMapper">
 
-    <resultMap id="BaseResultMap" type="com.cyq.bmall.model.Order">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="description" property="description" jdbcType="VARCHAR"/>
-        <result column="price" property="price" jdbcType="DOUBLE"/>
+<!--    <resultMap id="BaseResultMap" type="com.cyq.bmall.model.Order">-->
+<!--        <id column="id" property="id" jdbcType="VARCHAR"/>-->
+<!--        <result column="name" property="name" jdbcType="VARCHAR"/>-->
+<!--        <result column="description" property="description" jdbcType="VARCHAR"/>-->
+<!--        <result column="price" property="price" jdbcType="DOUBLE"/>-->
+<!--    </resultMap>-->
+    <resultMap id="MapResult"   type="HashMap">
+        <result property="key" column="key" />
+        <result property="value" column="value" />
     </resultMap>
-
     <insert id="save" parameterType="com.cyq.bmall.model.Commodity">
         INSERT INTO bmall.commodity (ID,NAME,price,description)
         VALUES (#{id}, #{name}, #{price},#{description})
@@ -70,9 +73,51 @@
         WHERE cc.CATEGORY_ID = #{categoryId}
     </select>
 
-    <select id="bestSellingCommodity" resultType="com.cyq.bmall.model.Commodity" parameterType="com.cyq.bmall.model.Commodity">
-        SELECT c.id
-        FROM bmall.commodity c INNER JOIN bmall.category_commodity cc ON c.ID = cc.COMMODITY_ID
-        WHERE cc.CATEGORY_ID = #{categoryId}
+    <!-- 某个时间段内前十的热销商品-->
+    <select id="bestSellingCommodityNames" resultType="java.lang.String">
+        SELECT c.name
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order o ON o.id=oc.ORDER_ID
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY SUM(oc.quantity) DESC
+        LIMIT 10
     </select>
+
+    <!-- 某个时间段内前十的热销商品-->
+    <select id="bestSellingCommodityValues" resultType="java.lang.Integer">
+        SELECT SUM(oc.quantity)
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order o ON o.id=oc.ORDER_ID
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY SUM(oc.quantity) DESC
+        LIMIT 10
+    </select>
+
+    <!-- 某个时间段内好评率	评价数量（热销程度前十的热销商品-->
+    <select id="bestEvaluationRatingCommodityNames" resultType="java.lang.String">
+        SELECT c.name
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order  ON order.id=oc.ORDER_ID
+        INNER JOIN bmall.comment ON oc.id=comment.ORDER_ID
+        WHERE order.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY SUM(score)/COUNT(*) DESC
+        LIMIT 10
+    </select>
+
+    <!-- 某个时间段内好评率前十的热销商品-->
+    <select id="bestEvaluationRatingCommodityValues" resultType="java.lang.Float">
+        SELECT SUM(score)/COUNT(*)
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order o ON o.id=oc.ORDER_ID
+        INNER JOIN bmall.comment co ON oc.id=co.ORDER_ID
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY SUM(score)/COUNT(*) DESC
+        LIMIT 10
+    </select>
+
+
 </mapper>

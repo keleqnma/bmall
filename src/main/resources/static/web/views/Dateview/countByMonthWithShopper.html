@@ -25,7 +25,6 @@
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
 <script src="../../common/js/base.min.js"></script>
@@ -38,16 +37,17 @@
     option = null;
     var date;
     var data;
+    myChart.showLoading();
 
     $.ajax({
         type: "GET",
         dataType: 'json',
-        //url: "http://localhost:10000/dataview/order?key=count&step=1&startRequest=2017.01.01",
         url: "http://localhost:10000/dataview/order?key=count&step=30",
         beforeSend: function(request) {
             request.setRequestHeader("Authorization", token);
         },
         success: function(result) {
+            myChart.hideLoading();
             date = result["date"];
             data = result["data"];
             option = {

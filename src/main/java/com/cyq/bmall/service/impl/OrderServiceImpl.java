@@ -88,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
     public DataTable<Order> tables(OrderVO orderVO) {
         Map<String, Object> params = new HashMap<>();
         Long currUid = SessionUtil.getCurrUid();
+
         if (currUid != null && !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue() ) ) {
             params.put("shopId", currUid);// 查自己有权限的订单
         }
@@ -135,10 +136,11 @@ public class OrderServiceImpl implements OrderService {
         params.put("categoryId",categoryId);
 
         Long currUid = SessionUtil.getCurrUid();
-        params.put("shopId", currUid);
-        if (currUid != null && !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue() ) ) {
+        if ( !userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue()))  {
             params.put("shopId", currUid);// 查自己有权限的订单
         }
+
+        System.out.println(userMapper.getUserRoleIds(currUid).contains(AppConst.USER_TYPE_ADMIN.longValue()));
 
         PageHelper.offsetPage(orderVO.getStart(), orderVO.getLength());
         List<Order> orders = orderMapper.findOrder(params);

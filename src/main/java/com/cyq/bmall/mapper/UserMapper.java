@@ -5,6 +5,7 @@ import com.cyq.bmall.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,4 +92,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     //返回某种特定身份的user 比如商家，比如管理员
     List<User> getRoleUsers(Map<String, Object> params);
+
+    //某个时间段内下单金额前十名的商店
+    ArrayList<String> bestShopNames(Map<String, Object> params);
+
+    //某个时间段内下单金额前十名的用户下单的商店
+    ArrayList<Float> bestShopValues(Map<String, Object> params);
 }

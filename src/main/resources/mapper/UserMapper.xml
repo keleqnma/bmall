@@ -97,4 +97,25 @@
             WHERE ur.role_id = #{type}
             order by u.id
     </select>
+
+    <select id="bestShopNames" resultType="java.lang.String">
+        SELECT s.name
+        FROM bmall.user s INNER JOIN bmall.shop_commodity sc ON sc.shop_id=s.id
+        INNER JOIN bmall.commodity c ON sc.commodity_id=c.id
+        INNER JOIN bmall.order_commodity oc ON oc. commodity_id=c.id
+        INNER JOIN bmall.order o ON oc.order_id = o.id
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY s.id
+        ORDER BY SUM(c.price*quantity) DESC
+        LIMIT 10
+    </select>
+
+    <select id="bestShopValues" resultType="java.lang.Float">
+        SELECT SUM(price)
+        FROM bmall.buyer b INNER JOIN bmall.order o ON o.userId=b.id
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY b.id
+        ORDER BY SUM(price) DESC
+        LIMIT 10
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.cyq.bmall.model.Category;
 import com.cyq.bmall.model.Commodity;
 import com.cyq.bmall.model.Shop;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.Date;
@@ -76,12 +77,22 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
      */
     Category getCategoryCommodities(Long commodityId);
 
-    //某个时间段内前十的热销商品
-    List<Commodity> bestSellingCommodity(Date dateBegin, Date dateEnd);
+    //某个时间段内前十的热销商品名字
+    List<String> bestSellingCommodityNames(Map<String, Object> params);
 
-    //某个时间段内评价数量前十商品
-    List<Commodity> bestEvaluationQuantityCommodity(Date dateBegin, Date dateEnd);
+    //某个时间段内前十的热销商品销量
+    List<Integer> bestSellingCommodityValues(Map<String, Object> params);
+
+    //某个时间段内前十的热销商品名字
+    List<String> bestEvaluationQuantityCommodityNames(Map<String, Object> params);
+
+    //某个时间段内前十的热销商品销量
+    List<Integer> bestEvaluationQuantityCommodityValues(Map<String, Object> params);
 
     //某个时间段内好评率前十商品
-    List<Commodity> bestEvaluationRatingCommodity(Date dateBegin, Date dateEnd);
+    List<String> bestEvaluationRatingCommodityNames(Map<String, Object> params);
+
+    //某个时间段内好评率前十商品
+    List<Integer> bestEvaluationRatingCommodityValues(Map<String, Object> params);
+
 }

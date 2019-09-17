@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.cyq.bmall.model.Buyer;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +51,10 @@ public interface BuyerMapper extends BaseMapper<Buyer> {
      * @return 买家
      */
     Buyer getById(Long id);
+
+    //某个时间段内下单金额前十名的用户
+    ArrayList<String> bestBuyerNames(Map<String, Object> params);
+
+    //某个时间段内下单金额前十名的用户下单的金额
+    ArrayList<Float> bestBuyerValues(Map<String, Object> params);
 }

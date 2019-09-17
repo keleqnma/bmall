@@ -54,7 +54,7 @@ define(function (require, exports, module) {
                             }
 
                             if ($.inArray("/user/editPwd-post", resourceData) > -1) {
-                                str += "<button data-text='修改密码'  data-id='editPwd' data-link='../editPassword/editOrder.html?id=" + row.id + "' class='btn btn-primary pwd-btn btn-xs margin-right-5'><i class='fa fa-key' aria-hidden='true'></i> 修改密码</button>"
+                                str += "<button data-text='修改密码'  data-id='editPwd' data-link='../editPassword/editPassword.html?id=" + row.id + "' class='btn btn-primary pwd-btn btn-xs margin-right-5'><i class='fa fa-key' aria-hidden='true'></i> 修改密码</button>"
                             }
 
                             if ($.inArray("/user/*-delete", resourceData) > -1) {
