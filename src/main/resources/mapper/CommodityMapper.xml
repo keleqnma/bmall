@@ -96,6 +96,29 @@
     </select>
 
     <!-- 某个时间段内好评率	评价数量（热销程度前十的热销商品-->
+    <select id="bestEvaluationQuantityCommodityNames" resultType="java.lang.String">
+        SELECT c.name
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order  ON order.id=oc.ORDER_ID
+        INNER JOIN bmall.comment ON oc.id=comment.ORDER_ID
+        WHERE order.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY COUNT(*) DESC
+        LIMIT 10
+    </select>
+
+    <!-- 某个时间段内好评率前十的热销商品-->
+    <select id="bestEvaluationQuantityCommodityValues" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
+        INNER JOIN bmall.order o ON o.id=oc.ORDER_ID
+        INNER JOIN bmall.comment co ON oc.id=co.ORDER_ID
+        WHERE o.issueTime between #{dateBegin,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        GROUP BY c.name
+        ORDER BY COUNT(*) DESC
+        LIMIT 10
+    </select>
+
     <select id="bestEvaluationRatingCommodityNames" resultType="java.lang.String">
         SELECT c.name
         FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
@@ -108,8 +131,8 @@
     </select>
 
     <!-- 某个时间段内好评率前十的热销商品-->
-    <select id="bestEvaluationRatingCommodityValues" resultType="java.lang.Float">
-        SELECT SUM(score)/COUNT(*)
+    <select id="bestEvaluationRatingCommodityValues" resultType="java.lang.Integer">
+        SELECT SUM(score)/COUNT(*)*20
         FROM bmall.commodity c INNER JOIN bmall.order_commodity oc ON c.ID = oc.COMMODITY_ID
         INNER JOIN bmall.order o ON o.id=oc.ORDER_ID
         INNER JOIN bmall.comment co ON oc.id=co.ORDER_ID

@@ -15,6 +15,9 @@ import java.util.*;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 
+import static jdk.nashorn.internal.objects.Global.println;
+import static sun.misc.Version.print;
+
 @RestController
 @RequestMapping("/dataview")
 @Slf4j
@@ -51,12 +54,13 @@ public class DataviewController {
     @Data
     private class CommodityResp {
         int value;
+        float realValue;
         String name;
 
-        public CommodityResp(int value, String name) {
+        public CommodityResp(String name) {
             this.setName(name);
-            this.setValue(value);
         }
+
     }
 
     @Data
@@ -165,7 +169,7 @@ public class DataviewController {
         params.put("dateEnd", end);
 
         List<Integer> values = null;
-        List<Float> realvalues;
+        List<Float> realValues = null;
         List<String> names;
 
         switch (key) {
@@ -183,7 +187,7 @@ public class DataviewController {
                 break;
             case "user":
                 names = buyerMapper.bestBuyerNames(params);
-                realvalues = buyerMapper.bestBuyerValues(params);
+                realValues = buyerMapper.bestBuyerValues(params);
                 break;
             default:
                 names = new ArrayList<String>();
@@ -191,8 +195,17 @@ public class DataviewController {
         }
         int size = names.size();
         for (int i = 0; i < size; i++) {
-            commodityResps.add(new CommodityResp(values.get(i), names.get(i)));
+            commodityResps.add(new CommodityResp(names.get(i)));
         }
+        if(values!=null)
+        for (int i = 0; i < size; i++) {
+            commodityResps.get(i).setValue(values.get(i));
+        }
+        else
+        for (int i = 0; i < size; i++) {
+            commodityResps.get(i).setRealValue(realValues.get(i)*100);
+        }
+
         return commodityResps;
     }
 
