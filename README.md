@@ -34,6 +34,7 @@
 
 ## 页面展示
 
-![](img/login.png)
-![](img/page1.png)
-![](img/page2.png)
+![Category_Managemnt](https://github.com/keleqnma/bmall/blob/master/pictures/Category_Managemnt.png)
+![buyerStatics](https://github.com/keleqnma/bmall/blob/master/pictures/buyerStatics.png)
+![commodity_management](https://github.com/keleqnma/bmall/blob/master/pictures/commodity_management.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/function_index1.png)
