@@ -33,7 +33,6 @@
 
 
 ## 页面展示
-
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/Category_Managemnt.png)
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/buyerStatics.png)
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/commodity_management.png)
