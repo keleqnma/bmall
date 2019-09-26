@@ -41,5 +41,5 @@
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/home.png)
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/orderStatisticsByDay.png)
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/resource_managemnt.png)
-![image](https://github.com/keleqnma/bmall/blob/master/pictures/role_managemnt.png)
-![image](https://github.com/keleqnma/bmall/blob/master/pictures/user_managemnt.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/role_management.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/user_management.png)
