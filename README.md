@@ -34,7 +34,13 @@
 
 ## 页面展示
 
-![Category_Managemnt](https://github.com/keleqnma/bmall/blob/master/pictures/Category_Managemnt.png)
-![buyerStatics](https://github.com/keleqnma/bmall/blob/master/pictures/buyerStatics.png)
-![commodity_management](https://github.com/keleqnma/bmall/blob/master/pictures/commodity_management.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/Category_Managemnt.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/buyerStatics.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/commodity_management.png)
 ![image](https://github.com/keleqnma/bmall/blob/master/pictures/function_index1.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/function_index2.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/home.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/orderStatisticsByDay.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/resource_managemnt.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/role_managemnt.png)
+![image](https://github.com/keleqnma/bmall/blob/master/pictures/user_managemnt.png)
