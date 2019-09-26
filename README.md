@@ -19,7 +19,7 @@ Permission verification and session persistence with JWT+Spring Security. The pr
 
 
 
-## Deployment Run
+## Deployment
 Modify the database connection in `application-dev.yml`
 Execute the `mysql -uroot -p database < bmall.sql` to import the database script.
 Direct Run`DMCApplication` access after startup: http://localhost:10000/web/views/login/login.html
